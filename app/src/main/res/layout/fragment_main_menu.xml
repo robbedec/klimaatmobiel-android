@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="vertical"
+        tools:context="com.klimaatmobiel.MainMenuFragment">
+
+        <Button
+            android:id="@+id/start_project_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/start_project_button_text" />
+
+        <Button
+            android:id="@+id/webshop_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/webshop_button_text" />
+    </LinearLayout>
+</layout>
+

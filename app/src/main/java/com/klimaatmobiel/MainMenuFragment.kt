@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import com.example.projecten3android.R
 import com.example.projecten3android.databinding.FragmentMainMenuBinding
 /**
@@ -19,9 +20,15 @@ class MainMenuFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_main_menu, container, false)
+        val binding: FragmentMainMenuBinding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_main_menu, container, false
+        )
+        binding.webshopButton.setOnClickListener { view: View ->
+            view.findNavController().navigate(R.id.action_mainMenuFragment2_to_webshopFragment)
         }
+        return binding.root
     }
+}
 
 
 

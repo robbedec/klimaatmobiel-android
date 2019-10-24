@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
     app:startDestination="@id/titleFragment">
     <fragment
@@ -8,11 +9,34 @@
         android:name="com.klimaatmobiel.TitleFragment"
         android:label="TitleFragment" >
         <action
-            android:id="@+id/action_titleFragment_to_mainMenuFragment"
-            app:destination="@id/mainMenuFragment" />
+            android:id="@+id/action_titleFragment_to_mainMenuFragment2"
+            app:destination="@id/mainMenuFragment2" />
     </fragment>
     <fragment
-        android:id="@+id/mainMenuFragment"
+        android:id="@+id/webshopFragment"
+        android:name="com.klimaatmobiel.WebshopFragment"
+        android:label="fragment_webshop2"
+        tools:layout="@layout/fragment_webshop2" >
+        <action
+            android:id="@+id/action_webshopFragment_to_shoppingcartfragment"
+            app:destination="@id/shoppingcartfragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/shoppingcartfragment"
+        android:name="com.klimaatmobiel.Shoppingcartfragment"
+        android:label="fragment_shoppingcart2"
+        tools:layout="@layout/fragment_shoppingcart2" >
+        <action
+            android:id="@+id/action_shoppingcartfragment_to_webshopFragment"
+            app:destination="@id/webshopFragment"
+            app:popUpTo="@+id/webshopFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainMenuFragment2"
         android:name="com.klimaatmobiel.MainMenuFragment"
-        android:label="MainMenuFragment" />
+        android:label="MainMenuFragment" >
+        <action
+            android:id="@+id/action_mainMenuFragment2_to_webshopFragment"
+            app:destination="@id/webshopFragment" />
+    </fragment>
 </navigation>

@@ -33,6 +33,9 @@ class WebshopFragment : Fragment() {
             view.findNavController().navigate(R.id.action_webshopFragment_to_shoppingcartfragment)
         }
 
+        binding.detailsButton1.setOnClickListener{view: View ->
+            view.findNavController().navigate(R.id.action_webshopFragment_to_productDetailFragment)
+        }
 
         return binding.root
         }

@@ -10,21 +10,21 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 
 import com.example.projecten3android.R
-import com.example.projecten3android.databinding.FragmentShoppingcart2Binding
+import com.example.projecten3android.databinding.FragmentProductDetailBinding
 
 /**
  * A simple [Fragment] subclass.
  */
-class Shoppingcartfragment : Fragment() {
+class ProductDetailFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding: FragmentShoppingcart2Binding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_shoppingcart2, container, false)
+        val binding: FragmentProductDetailBinding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_product_detail, container, false)
         binding.imageButton4.setOnClickListener {view: View ->
-            view.findNavController().navigate(R.id.action_shoppingcartfragment_to_webshopFragment)
+            view.findNavController().navigate(R.id.action_productDetailFragment_to_webshopFragment)
         }
         return binding.root
     }

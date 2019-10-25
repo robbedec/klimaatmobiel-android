@@ -20,6 +20,9 @@
         <action
             android:id="@+id/action_webshopFragment_to_shoppingcartfragment"
             app:destination="@id/shoppingcartfragment" />
+        <action
+            android:id="@+id/action_webshopFragment_to_productDetailFragment"
+            app:destination="@id/productDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/shoppingcartfragment"
@@ -38,5 +41,14 @@
         <action
             android:id="@+id/action_mainMenuFragment2_to_webshopFragment"
             app:destination="@id/webshopFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/productDetailFragment"
+        android:name="com.klimaatmobiel.ProductDetailFragment"
+        android:label="ProductDetailFragment" >
+        <action
+            android:id="@+id/action_productDetailFragment_to_webshopFragment"
+            app:destination="@id/webshopFragment"
+            app:popUpTo="@+id/webshopFragment" />
     </fragment>
 </navigation>

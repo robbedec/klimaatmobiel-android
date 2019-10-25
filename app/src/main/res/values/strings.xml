@@ -8,8 +8,9 @@
     <string name="start_project_button_text">start module</string>
     <string name="webshop_button_text">naar webshop</string>
     <string name="shopping_cart">Winkelwagentje</string>
-    <string name="budget_text">Budget:</string>
+    <string name="budget_text">Budget: 20</string>
     <string name="project_name">Project:</string>
     <string name="finish_order_text">Rond bestelling af</string>
+    <string name="details_text">Details</string>
 
 </resources>

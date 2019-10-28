@@ -29,7 +29,8 @@
     <fragment
         android:id="@+id/mainMenuFragment2"
         android:name="com.klimaatmobiel.ui.fragments.MainMenuFragment"
-        android:label="MainMenuFragment" >
+        android:label="MainMenuFragment"
+        tools:layout="@layout/fragment_main_menu">
         <action
             android:id="@+id/action_mainMenuFragment2_to_webshopFragment"
             app:destination="@id/webshopFragment" />

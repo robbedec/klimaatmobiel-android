@@ -33,7 +33,9 @@
         tools:layout="@layout/fragment_main_menu">
         <action
             android:id="@+id/action_mainMenuFragment2_to_webshopFragment"
-            app:destination="@id/webshopFragment" />
+            app:destination="@id/webshopFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:popUpTo="@+id/mainMenuFragment2" />
     </fragment>
     <fragment
         android:id="@+id/productDetailFragment"

@@ -6,7 +6,7 @@
     app:startDestination="@id/titleFragment">
     <fragment
         android:id="@+id/titleFragment"
-        android:name="com.klimaatmobiel.TitleFragment"
+        android:name="com.klimaatmobiel.ui.fragments.TitleFragment"
         android:label="TitleFragment" >
         <action
             android:id="@+id/action_titleFragment_to_mainMenuFragment2"
@@ -14,7 +14,7 @@
     </fragment>
     <fragment
         android:id="@+id/webshopFragment"
-        android:name="com.klimaatmobiel.WebshopFragment"
+        android:name="com.klimaatmobiel.ui.fragments.WebshopFragment"
         android:label="fragment_webshop2"
         tools:layout="@layout/fragment_webshop2" >
         <action
@@ -26,7 +26,7 @@
     </fragment>
     <fragment
         android:id="@+id/shoppingcartfragment"
-        android:name="com.klimaatmobiel.Shoppingcartfragment"
+        android:name="com.klimaatmobiel.ui.fragments.Shoppingcartfragment"
         android:label="fragment_shoppingcart2"
         tools:layout="@layout/fragment_shoppingcart2" >
         <action
@@ -36,7 +36,7 @@
     </fragment>
     <fragment
         android:id="@+id/mainMenuFragment2"
-        android:name="com.klimaatmobiel.MainMenuFragment"
+        android:name="com.klimaatmobiel.ui.fragments.MainMenuFragment"
         android:label="MainMenuFragment" >
         <action
             android:id="@+id/action_mainMenuFragment2_to_webshopFragment"
@@ -44,7 +44,7 @@
     </fragment>
     <fragment
         android:id="@+id/productDetailFragment"
-        android:name="com.klimaatmobiel.ProductDetailFragment"
+        android:name="com.klimaatmobiel.ui.fragments.ProductDetailFragment"
         android:label="ProductDetailFragment" >
         <action
             android:id="@+id/action_productDetailFragment_to_webshopFragment"

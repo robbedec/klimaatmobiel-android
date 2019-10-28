@@ -1,4 +1,4 @@
-package com.klimaatmobiel
+package com.klimaatmobiel.ui.fragments
 
 
 import android.os.Bundle

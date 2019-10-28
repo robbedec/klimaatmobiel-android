@@ -40,6 +40,9 @@ class MainMenuFragment : Fragment() {
             viewModel.navigateToWebshop.value = true
         }
 
+        /*
+         * Listen to changes of the property in the ViewModel and reset its value
+         */
         viewModel.navigateToWebshop.observe(this, Observer {
             findNavController().navigate(MainMenuFragmentDirections.actionMainMenuFragment2ToWebshopFragment())
             viewModel.onWebshopNavigated()

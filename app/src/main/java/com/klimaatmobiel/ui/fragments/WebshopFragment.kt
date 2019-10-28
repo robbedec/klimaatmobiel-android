@@ -7,28 +7,34 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 
 import com.example.projecten3android.R
-import com.example.projecten3android.databinding.FragmentWebshop2Binding
+import com.example.projecten3android.databinding.FragmentWebshopBinding
+import com.klimaatmobiel.ui.viewModels.WebshopViewModel
 
 /**
  * A simple [Fragment] subclass.
  */
 class WebshopFragment : Fragment() {
 
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var viewAdapter: RecyclerView.Adapter<*>
-    private lateinit var viewManager: RecyclerView.LayoutManager
+    private lateinit var binding: FragmentWebshopBinding
+    private lateinit var viewModel: WebshopViewModel
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val binding: FragmentWebshop2Binding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_webshop2, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        
+        // Inflate xml
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_webshop, container, false)
+
+        // Request the ViewModal
+        viewModel = ViewModelProviders.of(this).get(WebshopViewModel::class.java)
+        binding.webshopViewModel = viewModel
+
+        binding.lifecycleOwner = this
+
+
+
         binding.shoppingcartButton.setOnClickListener {view : View ->
             view.findNavController().navigate(R.id.action_webshopFragment_to_shoppingcartfragment)
         }

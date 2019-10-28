@@ -3,6 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.klimaatmobiel.ui.fragments.WebshopFragment">
 
+    <data>
+        <variable
+            name="webshopViewModel"
+            type="com.klimaatmobiel.ui.viewModels.WebshopViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">

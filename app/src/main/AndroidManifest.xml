@@ -9,7 +9,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.klimaatmobiel.ui.fragments.TitleFragment"></activity>
         <activity android:name="com.klimaatmobiel.ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -3,15 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/titleFragment">
-    <fragment
-        android:id="@+id/titleFragment"
-        android:name="com.klimaatmobiel.ui.fragments.TitleFragment"
-        android:label="TitleFragment" >
-        <action
-            android:id="@+id/action_titleFragment_to_mainMenuFragment2"
-            app:destination="@id/mainMenuFragment2" />
-    </fragment>
+    app:startDestination="@id/mainMenuFragment2">
     <fragment
         android:id="@+id/webshopFragment"
         android:name="com.klimaatmobiel.ui.fragments.WebshopFragment"

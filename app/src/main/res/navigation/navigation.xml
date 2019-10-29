@@ -3,30 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/titleFragment">
-    <fragment
-        android:id="@+id/titleFragment"
-        android:name="com.klimaatmobiel.TitleFragment"
-        android:label="TitleFragment" >
-        <action
-            android:id="@+id/action_titleFragment_to_mainMenuFragment2"
-            app:destination="@id/mainMenuFragment2" />
-    </fragment>
+    app:startDestination="@id/mainMenuFragment2">
     <fragment
         android:id="@+id/webshopFragment"
-        android:name="com.klimaatmobiel.WebshopFragment"
+        android:name="com.klimaatmobiel.ui.fragments.WebshopFragment"
         android:label="fragment_webshop2"
-        tools:layout="@layout/fragment_webshop2" >
+        tools:layout="@layout/fragment_webshop" >
         <action
             android:id="@+id/action_webshopFragment_to_shoppingcartfragment"
             app:destination="@id/shoppingcartfragment" />
         <action
             android:id="@+id/action_webshopFragment_to_productDetailFragment"
             app:destination="@id/productDetailFragment" />
+        <argument
+            android:name="code"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/shoppingcartfragment"
-        android:name="com.klimaatmobiel.Shoppingcartfragment"
+        android:name="com.klimaatmobiel.ui.fragments.Shoppingcartfragment"
         android:label="fragment_shoppingcart2"
         tools:layout="@layout/fragment_shoppingcart2" >
         <action
@@ -36,15 +31,19 @@
     </fragment>
     <fragment
         android:id="@+id/mainMenuFragment2"
-        android:name="com.klimaatmobiel.MainMenuFragment"
-        android:label="MainMenuFragment" >
+        android:name="com.klimaatmobiel.ui.fragments.MainMenuFragment"
+        android:label="MainMenuFragment"
+        tools:layout="@layout/fragment_main_menu">
         <action
             android:id="@+id/action_mainMenuFragment2_to_webshopFragment"
-            app:destination="@id/webshopFragment" />
+            app:destination="@id/webshopFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:popUpTo="@+id/mainMenuFragment2"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/productDetailFragment"
-        android:name="com.klimaatmobiel.ProductDetailFragment"
+        android:name="com.klimaatmobiel.ui.fragments.ProductDetailFragment"
         android:label="ProductDetailFragment" >
         <action
             android:id="@+id/action_productDetailFragment_to_webshopFragment"

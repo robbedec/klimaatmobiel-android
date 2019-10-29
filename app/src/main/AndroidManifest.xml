@@ -3,14 +3,14 @@
     package="com.example.projecten3android">
 
     <application
+        android:name="com.klimaatmobiel.PusherApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.klimaatmobiel.TitleFragment"></activity>
-        <activity android:name="com.klimaatmobiel.MainActivity">
+        <activity android:name="com.klimaatmobiel.ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -17,7 +17,7 @@
             app:destination="@id/productDetailFragment" />
         <argument
             android:name="code"
-            app:argType="integer" />
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/shoppingcartfragment"

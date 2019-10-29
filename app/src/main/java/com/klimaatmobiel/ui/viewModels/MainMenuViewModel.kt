@@ -16,6 +16,7 @@ class MainMenuViewModel : ViewModel() {
      * Reset to null to prevent bugs when configuration changes happen
      */
     fun onWebshopNavigated() {
+        // TODO: fix this
         //_navigateToWebshop.value = false
     }
 }

@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_webshopFragment_to_productDetailFragment"
             app:destination="@id/productDetailFragment" />
+        <argument
+            android:name="code"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/shoppingcartfragment"

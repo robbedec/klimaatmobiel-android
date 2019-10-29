@@ -1,4 +1,4 @@
-package com.klimaatmobiel.ui
+package com.klimaatmobiel
 
 import android.app.Application
 import timber.log.Timber

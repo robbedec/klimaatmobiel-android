@@ -3,7 +3,6 @@ package com.klimaatmobiel.ui.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.klimaatmobiel.data.network.GroupProperty
 import com.klimaatmobiel.data.network.KlimaatmobielApi
 import retrofit2.Call
 import retrofit2.Callback

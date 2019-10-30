@@ -4,6 +4,6 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-class ApplicationDomain(val ApplicationDomainId : Long, val applicationDomainName : String, val applicationDomainDescr : String) : Parcelable {
+class ApplicationDomain(val applicationDomainId : Long, val applicationDomainName : String, val applicationDomainDescr : String) : Parcelable {
 
 }

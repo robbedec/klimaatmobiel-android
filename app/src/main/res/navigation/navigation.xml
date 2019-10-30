@@ -16,8 +16,8 @@
             android:id="@+id/action_webshopFragment_to_productDetailFragment"
             app:destination="@id/productDetailFragment" />
         <argument
-            android:name="code"
-            app:argType="string" />
+            android:name="group"
+            app:argType="com.klimaatmobiel.domain.Group" />
     </fragment>
     <fragment
         android:id="@+id/shoppingcartfragment"

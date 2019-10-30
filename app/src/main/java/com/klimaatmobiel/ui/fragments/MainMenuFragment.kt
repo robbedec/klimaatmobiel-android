@@ -15,6 +15,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.projecten3android.R
 import com.example.projecten3android.databinding.FragmentMainMenuBinding
+import com.klimaatmobiel.domain.Group
 import com.klimaatmobiel.ui.viewModels.MainMenuViewModel
 
 /**
@@ -22,8 +23,9 @@ import com.klimaatmobiel.ui.viewModels.MainMenuViewModel
  */
 class MainMenuFragment : Fragment() {
 
-    private lateinit var binding: FragmentMainMenuBinding
-    private lateinit var viewModel: MainMenuViewModel
+    private val viewModel: MainMenuViewModel by lazy {
+        ViewModelProviders.of(this).get(MainMenuViewModel::class.java)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -32,18 +34,16 @@ class MainMenuFragment : Fragment() {
         val binding = FragmentMainMenuBinding.inflate(inflater)
         binding.setLifecycleOwner(this)
 
-        viewModel = ViewModelProviders.of(this).get(MainMenuViewModel::class.java)
         binding.mainMenuViewModel = viewModel
 
         viewModel.navigateToWebshop.observe(this, Observer {
-            if(it){
-                findNavController().navigate(MainMenuFragmentDirections.actionMainMenuFragment2ToWebshopFragment(binding.projectCodeText.text.toString()))
+            if(it != null){
+                findNavController().navigate(MainMenuFragmentDirections.actionMainMenuFragment2ToWebshopFragment(it))
                 viewModel.onWebshopNavigated()
             }
         })
 
         return binding.root
-
 
 
 

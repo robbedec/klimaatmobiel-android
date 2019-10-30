@@ -18,7 +18,7 @@ import timber.log.Timber
 
 
 
-class WebshopViewModel(groupCode : String) : ViewModel() {
+class WebshopViewModel(group : Group) : ViewModel() {
 
 
     private val _status = MutableLiveData<KlimaatMobielApiStatus>()
@@ -35,31 +35,8 @@ class WebshopViewModel(groupCode : String) : ViewModel() {
 
 
     init {
-        getGroupWithProject(groupCode)
+        _group.value = group // de groep met het project end de order is hier beschikbaar
     }
 
-    private fun getGroupWithProject(groupCode : String) {
 
-        coroutineScope.launch {
-
-            var getGroupDeferred = KlimaatmobielApi.retrofitService.getFullGroup(groupCode)
-
-            try {
-                _status.value = KlimaatMobielApiStatus.LOADING
-                val group = getGroupDeferred.await()
-                val a = group;
-                _group.value = group
-
-
-                _status.value = KlimaatMobielApiStatus.DONE
-
-            }catch (e: HttpException) {
-                _status.value = KlimaatMobielApiStatus.ERROR
-            }
-            catch (e: Exception) {
-                _status.value = KlimaatMobielApiStatus.ERROR
-            }
-        }
-
-    }
 }

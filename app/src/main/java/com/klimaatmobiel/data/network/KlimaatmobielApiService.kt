@@ -13,6 +13,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
+// launch backend as http -- line 39 properties "applicationUrl": "http://localhost:5000"
 private const val BASE_URL = "http://10.0.2.2:5000/api/"
 
 private val moshi = Moshi.Builder()

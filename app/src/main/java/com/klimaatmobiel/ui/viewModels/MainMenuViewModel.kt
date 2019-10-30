@@ -11,6 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
+import timber.log.Timber
 
 class MainMenuViewModel : ViewModel() {
 
@@ -46,9 +47,11 @@ class MainMenuViewModel : ViewModel() {
                 _status.value = KlimaatMobielApiStatus.DONE
 
             }catch (e: HttpException) {
+                Timber.i(e.message())
                 _status.value = KlimaatMobielApiStatus.ERROR
             }
             catch (e: Exception) {
+                Timber.i(e.message)
                 _status.value = KlimaatMobielApiStatus.ERROR
             }
         }

@@ -28,8 +28,8 @@ interface KlimaatmobielApiService {
 
 
     @GET("group/project/{groupCode}")
-    fun getProject(@Path("groupCode") groupCode: String):
-            Call<Group>
+    fun getFullGroup(@Path("groupCode") groupCode: String):
+            Deferred<Group>
 
 
 }

@@ -14,6 +14,7 @@ import androidx.navigation.findNavController
 
 import com.example.projecten3android.R
 import com.example.projecten3android.databinding.FragmentWebshopBinding
+import com.klimaatmobiel.ui.ViewModelFactories.WebshopViewModelFactory
 import com.klimaatmobiel.ui.viewModels.WebshopViewModel
 import timber.log.Timber
 
@@ -27,19 +28,16 @@ class WebshopFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        // Inflate xml
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_webshop, container, false)
 
-        // Request the ViewModal
-        viewModel = ViewModelProviders.of(this).get(WebshopViewModel::class.java)
-        binding.webshopViewModel = viewModel
+        val binding = FragmentWebshopBinding.inflate(inflater)
+        binding.setLifecycleOwner(this)
 
-        binding.lifecycleOwner = this
+        val groupCode = WebshopFragmentArgs.fromBundle(arguments!!).code
 
-        var args = WebshopFragmentArgs.fromBundle(arguments!!)
-        Timber.i("The projectcode from args: %s", args.code.toString())
-
+        val viewModelFactory = WebshopViewModelFactory(groupCode)
+        binding.webshopViewModel = ViewModelProviders.of(this, viewModelFactory).get(WebshopViewModel::class.java)
 
         return binding.root
+
     }
 }

@@ -21,8 +21,9 @@ class Shoppingcartfragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding: FragmentShoppingcart2Binding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_shoppingcart2, container, false)
+
+
+        val binding: FragmentShoppingcart2Binding = DataBindingUtil.inflate(inflater, R.layout.fragment_shoppingcart2, container, false)
         binding.imageButton4.setOnClickListener {view: View ->
             view.findNavController().navigate(R.id.action_shoppingcartfragment_to_webshopFragment)
         }

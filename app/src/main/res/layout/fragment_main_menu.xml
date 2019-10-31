@@ -33,7 +33,7 @@
             android:ems="10"
             android:hint="@string/edit_text_hint"
             android:inputType="textPersonName"
-            android:text="@{mainMenuViewModel.groupCode}"
+            android:text="@={mainMenuViewModel.groupCode}"
             app:layout_constraintBottom_toTopOf="@+id/webshop_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

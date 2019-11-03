@@ -16,6 +16,7 @@ import com.example.projecten3android.R
 import com.example.projecten3android.databinding.FragmentWebshopBinding
 import com.klimaatmobiel.domain.Group
 import com.klimaatmobiel.ui.ViewModelFactories.WebshopViewModelFactory
+import com.klimaatmobiel.ui.adapters.ProductListAdapter
 import com.klimaatmobiel.ui.viewModels.MainMenuViewModel
 import com.klimaatmobiel.ui.viewModels.WebshopViewModel
 import timber.log.Timber
@@ -39,6 +40,11 @@ class WebshopFragment : Fragment() {
         } ?: throw Exception("Invalid Activity")
 
         binding.webshopViewModel = viewModel
+
+
+        binding.productsList.adapter = ProductListAdapter(ProductListAdapter.OnClickListener {
+            Timber.i("Clicked on product")
+        })
 
 
         return binding.root

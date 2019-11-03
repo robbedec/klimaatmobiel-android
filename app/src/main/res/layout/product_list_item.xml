@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="ticket"
+            name="product"
             type="com.klimaatmobiel.domain.Product" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,7 +30,6 @@
             android:id="@+id/textView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Hout - 35"
             android:layout_marginTop="24dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
@@ -38,6 +37,7 @@
             android:textStyle="bold"
             android:textColor="#383636"
 
+            app:productNameBinding="@{product}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/product_image"
             app:layout_constraintTop_toTopOf="parent" />

@@ -13,6 +13,7 @@ import com.example.projecten3android.R
 import com.example.projecten3android.databinding.FragmentShoppingCartBinding
 import com.example.projecten3android.databinding.FragmentWebshopBinding
 import com.klimaatmobiel.ui.viewModels.WebshopViewModel
+import timber.log.Timber
 
 
 class ShoppingCartFragment : Fragment() {
@@ -34,6 +35,8 @@ class ShoppingCartFragment : Fragment() {
         } ?: throw Exception("Invalid Activity")
 
         binding.webshopViewModel = viewModel
+
+
 
 
         return binding.root

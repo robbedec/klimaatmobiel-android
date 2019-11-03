@@ -37,7 +37,7 @@ class MainMenuViewModel : ViewModel() {
         coroutineScope.launch {
 
             //var getGroupDeferred = KlimaatmobielApi.retrofitService.getFullGroup(groupCode.value!!) // "1abcde"
-            var getGroupDeferred = KlimaatmobielApi.retrofitService.getFullGroup("1abcde") // "1abcde"
+            var getGroupDeferred = KlimaatmobielApi.retrofitService.getFullGroup("212345") // "212345"
             try {
                 _status.value = KlimaatMobielApiStatus.LOADING
                 val group = getGroupDeferred.await()

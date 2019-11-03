@@ -17,16 +17,19 @@ import com.example.projecten3android.databinding.FragmentProductDetailBinding
  */
 class ProductDetailFragment : Fragment() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        val binding: FragmentProductDetailBinding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_product_detail, container, false)
-        binding.imageButton4.setOnClickListener {view: View ->
-            view.findNavController().navigate(R.id.action_productDetailFragment_to_webshopFragment)
-        }
+
+        val binding = FragmentProductDetailBinding.inflate(inflater)
+        binding.setLifecycleOwner(this)
+
+
+
         return binding.root
+
+
+
+
     }
 
 

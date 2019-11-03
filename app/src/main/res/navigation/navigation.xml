@@ -4,50 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
     app:startDestination="@id/mainMenuFragment2">
-    <fragment
-        android:id="@+id/webshopFragment"
-        android:name="com.klimaatmobiel.ui.fragments.WebshopFragment"
-        android:label="fragment_webshop2"
-        tools:layout="@layout/fragment_webshop" >
-        <action
-            android:id="@+id/action_webshopFragment_to_shoppingcartfragment"
-            app:destination="@id/shoppingcartfragment" />
-        <action
-            android:id="@+id/action_webshopFragment_to_productDetailFragment"
-            app:destination="@id/productDetailFragment" />
-        <argument
-            android:name="group"
-            app:argType="com.klimaatmobiel.domain.Group" />
-    </fragment>
-    <fragment
-        android:id="@+id/shoppingcartfragment"
-        android:name="com.klimaatmobiel.ui.fragments.Shoppingcartfragment"
-        android:label="fragment_shoppingcart2"
-        tools:layout="@layout/fragment_shoppingcart2" >
-        <action
-            android:id="@+id/action_shoppingcartfragment_to_webshopFragment"
-            app:destination="@id/webshopFragment"
-            app:popUpTo="@+id/webshopFragment" />
-    </fragment>
+
     <fragment
         android:id="@+id/mainMenuFragment2"
         android:name="com.klimaatmobiel.ui.fragments.MainMenuFragment"
         android:label="MainMenuFragment"
         tools:layout="@layout/fragment_main_menu">
         <action
-            android:id="@+id/action_mainMenuFragment2_to_webshopFragment"
-            app:destination="@id/webshopFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:popUpTo="@+id/mainMenuFragment2"
-            app:popUpToInclusive="true" />
+            android:id="@+id/action_mainMenuFragment2_to_bottomNavigationWebshopFragment"
+            app:destination="@id/bottomNavigationWebshopFragment" />
     </fragment>
     <fragment
         android:id="@+id/productDetailFragment"
         android:name="com.klimaatmobiel.ui.fragments.ProductDetailFragment"
-        android:label="ProductDetailFragment" >
+        android:label="ProductDetailFragment" />
+    <fragment
+        android:id="@+id/bottomNavigationWebshopFragment"
+        android:name="com.klimaatmobiel.ui.fragments.BottomNavigationWebshopFragment"
+        android:label="fragment_bottom_navigation_webshop"
+        tools:layout="@layout/fragment_bottom_navigation_webshop" >
+        <argument
+            android:name="group"
+            app:argType="com.klimaatmobiel.domain.Group" />
+    </fragment>
+    <fragment
+        android:id="@+id/webshopFragment"
+        android:name="com.klimaatmobiel.ui.fragments.WebshopFragment"
+        android:label="fragment_webshop"
+        tools:layout="@layout/fragment_webshop" >
         <action
-            android:id="@+id/action_productDetailFragment_to_webshopFragment"
-            app:destination="@id/webshopFragment"
-            app:popUpTo="@+id/webshopFragment" />
+            android:id="@+id/action_webshopFragment_to_productDetailFragment"
+            app:destination="@id/productDetailFragment" />
     </fragment>
 </navigation>

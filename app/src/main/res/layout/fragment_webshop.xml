@@ -30,6 +30,30 @@
             tools:itemCount="5"
             tools:listitem="@layout/product_list_item" />
 
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="Project details?"
+            android:textSize="50dp"
+            app:layout_constraintHeight_percent="0.3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/products_list"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.4" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintHeight_percent="0.7"
+            android:text="Product detail wanneer je op een product klikt?"
+            android:textSize="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/products_list"
+            app:layout_constraintWidth_percent="0.4" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

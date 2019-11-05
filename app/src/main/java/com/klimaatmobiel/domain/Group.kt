@@ -10,8 +10,10 @@ class Group(val groupId: Long, val groupName: String, val projectId: Double, val
 
 
 
-    fun addOrderItem(){
-
+    fun findOrderItemById(orderitemId : Long) : OrderItem?{
+        return order.orderItems.find {
+            it.orderItemId == orderitemId
+        }
     }
 
 

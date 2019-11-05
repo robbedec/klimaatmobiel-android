@@ -35,7 +35,7 @@
             android:layout_marginEnd="16dp"
             android:textSize="35dp"
             android:textStyle="bold"
-            android:textColor="#383636"
+            android:textColor="@color/colorBlack"
 
             app:productNameBinding="@{product}"
             app:layout_constraintEnd_toEndOf="parent"
@@ -50,7 +50,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="16dp"
             app:layout_constraintTop_toBottomOf="@+id/textView"
-            app:srcCompat="@drawable/ic_add_shopping_cart_100dp" />
+            app:srcCompat="@drawable/ic_add_shopping_cart_100dp"
+            />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

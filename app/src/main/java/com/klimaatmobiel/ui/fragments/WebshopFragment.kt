@@ -14,6 +14,10 @@ import androidx.navigation.findNavController
 
 import com.example.projecten3android.R
 import com.example.projecten3android.databinding.FragmentWebshopBinding
+import com.klimaatmobiel.domain.Group
+import com.klimaatmobiel.ui.ViewModelFactories.WebshopViewModelFactory
+import com.klimaatmobiel.ui.adapters.ProductListAdapter
+import com.klimaatmobiel.ui.viewModels.MainMenuViewModel
 import com.klimaatmobiel.ui.viewModels.WebshopViewModel
 import timber.log.Timber
 
@@ -22,24 +26,28 @@ import timber.log.Timber
  */
 class WebshopFragment : Fragment() {
 
-    private lateinit var binding: FragmentWebshopBinding
+
     private lateinit var viewModel: WebshopViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        // Inflate xml
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_webshop, container, false)
 
-        // Request the ViewModal
-        viewModel = ViewModelProviders.of(this).get(WebshopViewModel::class.java)
+        val binding = FragmentWebshopBinding.inflate(inflater)
+        binding.setLifecycleOwner(this)
+
+        viewModel = activity?.run {
+            ViewModelProviders.of(this)[WebshopViewModel::class.java]
+        } ?: throw Exception("Invalid Activity")
+
         binding.webshopViewModel = viewModel
 
-        binding.lifecycleOwner = this
 
-        var args = WebshopFragmentArgs.fromBundle(arguments!!)
-        Timber.i("The projectcode from args: %s", args.code.toString())
+        binding.productsList.adapter = ProductListAdapter(ProductListAdapter.OnClickListener {
+            Timber.i("Clicked on product")
+        })
 
 
         return binding.root
+
     }
 }

@@ -15,6 +15,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.projecten3android.R
 import com.example.projecten3android.databinding.FragmentMainMenuBinding
+import com.klimaatmobiel.domain.Group
 import com.klimaatmobiel.ui.viewModels.MainMenuViewModel
 
 /**
@@ -22,33 +23,31 @@ import com.klimaatmobiel.ui.viewModels.MainMenuViewModel
  */
 class MainMenuFragment : Fragment() {
 
-    private lateinit var binding: FragmentMainMenuBinding
-    private lateinit var viewModel: MainMenuViewModel
+    private val viewModel: MainMenuViewModel by lazy {
+        ViewModelProviders.of(this).get(MainMenuViewModel::class.java)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        // Inflate xml
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main_menu, container, false)
 
-        // Request the ViewModal
-        viewModel = ViewModelProviders.of(this).get(MainMenuViewModel::class.java)
+
+        val binding = FragmentMainMenuBinding.inflate(inflater)
+        binding.setLifecycleOwner(this)
+
         binding.mainMenuViewModel = viewModel
 
-        binding.lifecycleOwner = this
-
-        binding.webshopButton.setOnClickListener {
-            viewModel.navigateToWebshop.value = true
-        }
-
-        /*
-         * Listen to changes of the property in the ViewModel and reset its value
-         */
         viewModel.navigateToWebshop.observe(this, Observer {
-            findNavController().navigate(MainMenuFragmentDirections.actionMainMenuFragment2ToWebshopFragment(binding.projectCodeText.text.toString()))
-            viewModel.onWebshopNavigated()
+            if(it != null){
+                findNavController().navigate(MainMenuFragmentDirections.actionMainMenuFragment2ToBottomNavigationWebshopFragment(it))
+                viewModel.onWebshopNavigated()
+            }
         })
 
         return binding.root
+
+
+
+
     }
 }
 

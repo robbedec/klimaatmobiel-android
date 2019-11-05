@@ -16,6 +16,7 @@ import com.example.projecten3android.R
 import com.example.projecten3android.databinding.FragmentWebshopBinding
 import com.klimaatmobiel.domain.Group
 import com.klimaatmobiel.ui.ViewModelFactories.WebshopViewModelFactory
+import com.klimaatmobiel.ui.adapters.OrderPreviewListAdapter
 import com.klimaatmobiel.ui.adapters.ProductListAdapter
 import com.klimaatmobiel.ui.viewModels.MainMenuViewModel
 import com.klimaatmobiel.ui.viewModels.WebshopViewModel
@@ -41,9 +42,29 @@ class WebshopFragment : Fragment() {
 
         binding.webshopViewModel = viewModel
 
+        binding.orderPreviewList.adapter = OrderPreviewListAdapter(OrderPreviewListAdapter.OnClickListener{ // add
+            viewModel.changeOrderItemAmount(it, true)
+        }, OrderPreviewListAdapter.OnClickListener{// minus
+            viewModel.changeOrderItemAmount(it, false)
+        })
+
+
 
         binding.productsList.adapter = ProductListAdapter(ProductListAdapter.OnClickListener {
-            Timber.i("Clicked on product")
+            viewModel.addProductToOrder(it)
+
+
+            // refresht alles van de order recyclerview, is niet goed
+            binding.orderPreviewList.adapter = OrderPreviewListAdapter(OrderPreviewListAdapter.OnClickListener{ // add
+                viewModel.changeOrderItemAmount(it, true)
+
+            }, OrderPreviewListAdapter.OnClickListener{// minus
+                viewModel.changeOrderItemAmount(it, false)
+
+            })
+
+
+
         })
 
 

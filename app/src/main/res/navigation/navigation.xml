@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/mainMenuFragment2">
+
+    <fragment
+        android:id="@+id/mainMenuFragment2"
+        android:name="com.klimaatmobiel.ui.fragments.MainMenuFragment"
+        android:label="MainMenuFragment"
+        tools:layout="@layout/fragment_main_menu">
+        <action
+            android:id="@+id/action_mainMenuFragment2_to_bottomNavigationWebshopFragment"
+            app:destination="@id/bottomNavigationWebshopFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/productDetailFragment"
+        android:name="com.klimaatmobiel.ui.fragments.ProductDetailFragment"
+        android:label="ProductDetailFragment" />
+    <fragment
+        android:id="@+id/bottomNavigationWebshopFragment"
+        android:name="com.klimaatmobiel.ui.fragments.BottomNavigationWebshopFragment"
+        android:label="fragment_bottom_navigation_webshop"
+        tools:layout="@layout/fragment_bottom_navigation_webshop" >
+        <argument
+            android:name="group"
+            app:argType="com.klimaatmobiel.domain.Group" />
+    </fragment>
+    <fragment
+        android:id="@+id/webshopFragment"
+        android:name="com.klimaatmobiel.ui.fragments.WebshopFragment"
+        android:label="fragment_webshop"
+        tools:layout="@layout/fragment_webshop" >
+        <action
+            android:id="@+id/action_webshopFragment_to_productDetailFragment"
+            app:destination="@id/productDetailFragment" />
+    </fragment>
+</navigation>

@@ -59,9 +59,11 @@ class WebshopViewModel(group : Group) : ViewModel() {
                 val orderItemRes = addProductToOrderDeferred.await()
 
                 if(orderItemRes.removedOrAddedOrderItem.amount > 1){ // the orderitem is already in the orderitem
+                    // zoek naar het juiste orderItem en update de amount met de amount die je uit de backend krijgt
                     _group.value!!.order.orderItems.find {
                         it.orderItemId == orderItemRes.removedOrAddedOrderItem.orderItemId
                     }!!.amount = orderItemRes.removedOrAddedOrderItem.amount
+
                 } else {
                     _group.value!!.order.orderItems.add(orderItemRes.removedOrAddedOrderItem)
                 }

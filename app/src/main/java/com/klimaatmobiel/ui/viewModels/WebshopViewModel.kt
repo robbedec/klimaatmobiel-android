@@ -59,13 +59,13 @@ class WebshopViewModel(group : Group) : ViewModel() {
                 val orderItemRes = addProductToOrderDeferred.await()
 
                 if(orderItemRes.removedOrAddedOrderItem.amount > 1){ // the orderitem is already in the orderitem
-                    _group.value!!.order!!.orderItems.find {
+                    _group.value!!.order.orderItems.find {
                         it.orderItemId == orderItemRes.removedOrAddedOrderItem.orderItemId
                     }!!.amount = orderItemRes.removedOrAddedOrderItem.amount
                 } else {
-                    _group.value!!.order!!.orderItems.add(orderItemRes.removedOrAddedOrderItem)
+                    _group.value!!.order.orderItems.add(orderItemRes.removedOrAddedOrderItem)
                 }
-                _group.value!!.order!!.totalOrderPrice = orderItemRes.totalOrderPrice
+                _group.value!!.order.totalOrderPrice = orderItemRes.totalOrderPrice
                 _group.value = _group.value // trigger live data change
 
                 _status.value = KlimaatMobielApiStatus.DONE
@@ -85,7 +85,7 @@ class WebshopViewModel(group : Group) : ViewModel() {
     fun changeOrderItemAmount(oi: OrderItem, add: Boolean){
         if(add){
 
-            /*_group.value!!.order!!.orderItems.find {
+            /*_group.value!!.order.orderItems.find {
                 it.orderItemId == oi.orderItemId
             }!!.amount = oi.amount + 1*/
 

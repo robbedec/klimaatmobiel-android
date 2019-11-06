@@ -1,4 +1,12 @@
 # Klimaatmobiel Android - projecten III
+
+This android project is the primary interface that will be used by students. It provides a (fake)
+webshop that challenges users to think about the ecological impact of some products when they use it
+in their STEM projects. Teachers can control and manage the webshop with the webinterface that we created
+[here](https://github.com/HoGent-Projecten3/projecten3-1920-angular-klim03)
+
+The back-end that supports this system can be found [here](https://github.com/HoGent-Projecten3/projecten3-1920-backend-klim03)
+
 ## Getting started
 
 These instructions will allow you to run a copy of the project on your local machine for development and testing

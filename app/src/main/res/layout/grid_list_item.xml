@@ -30,7 +30,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="packed"
-                app:srcCompat="@android:color/darker_gray" />
+                app:srcCompat="@android:color/darker_gray"
+                app:imageUrl="@{product.productImage}"/>
 
             <TextView
                 android:id="@+id/info_text"

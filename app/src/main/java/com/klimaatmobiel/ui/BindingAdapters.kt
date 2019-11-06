@@ -1,9 +1,12 @@
 package com.klimaatmobiel.ui
 
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.klimaatmobiel.domain.Order
 import com.klimaatmobiel.domain.OrderItem
 import com.klimaatmobiel.domain.Product
@@ -62,4 +65,18 @@ fun btnCheckoutOrderBinding(btn: Button, totalPrice: Double) {
 @BindingAdapter("orderItemTotalPriceBinding")
 fun orderItemTotalPriceBinding(txtView: TextView, oi: OrderItem) {
     txtView.text = "€" + (oi.amount * oi.product!!.price).toString()
+}
+
+/**
+ * Convert imgUrl to a URI with the https scheme
+ * Use Glide to download the image display it in imgView
+ */
+@BindingAdapter("imageUrl")
+fun bindImage(imgView: ImageView, imgUrl: String?) {
+    imgUrl?.let {
+        val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
+        Glide.with(imgView.context)
+            .load(imgUri)
+            .into(imgView)
+    }
 }

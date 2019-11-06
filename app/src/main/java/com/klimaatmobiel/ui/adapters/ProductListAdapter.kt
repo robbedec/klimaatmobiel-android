@@ -5,13 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.projecten3android.databinding.GridListItemBinding
 import com.example.projecten3android.databinding.ProductListItemBinding
 import com.klimaatmobiel.domain.Product
 
 class ProductListAdapter( val onClickListener: OnClickListener) : ListAdapter<Product, ProductListAdapter.ProductViewHolder>(DiffCallback) {
 
 
-    class ProductViewHolder(private var binding: ProductListItemBinding):
+    class ProductViewHolder(private var binding: GridListItemBinding):
         RecyclerView.ViewHolder(binding.root) {
         fun bind(product: Product) {
             binding.product = product
@@ -30,7 +31,7 @@ class ProductListAdapter( val onClickListener: OnClickListener) : ListAdapter<Pr
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-        return ProductViewHolder(ProductListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return ProductViewHolder(GridListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
 

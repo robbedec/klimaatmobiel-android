@@ -7,6 +7,8 @@ import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.example.projecten3android.R
 import com.klimaatmobiel.domain.Order
 import com.klimaatmobiel.domain.OrderItem
 import com.klimaatmobiel.domain.Product
@@ -77,6 +79,10 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
         val imgUri = imgUrl.toUri().buildUpon().scheme("https").build()
         Glide.with(imgView.context)
             .load(imgUri)
+            .apply(
+                RequestOptions()
+                .placeholder(R.drawable.loading_animation)
+                .error(R.drawable.broken_image))
             .into(imgView)
     }
 }

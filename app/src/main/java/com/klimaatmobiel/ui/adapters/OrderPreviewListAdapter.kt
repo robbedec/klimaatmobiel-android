@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projecten3android.databinding.OrderPreviewListItemBinding
-import com.example.projecten3android.databinding.ProductListItemBinding
 import com.klimaatmobiel.domain.OrderItem
 import com.klimaatmobiel.domain.Product
 import kotlinx.android.synthetic.main.order_preview_list_item.view.*

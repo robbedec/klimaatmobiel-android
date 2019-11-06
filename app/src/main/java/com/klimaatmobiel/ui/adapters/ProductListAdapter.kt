@@ -6,11 +6,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projecten3android.databinding.GridListItemBinding
-import com.example.projecten3android.databinding.ProductListItemBinding
 import com.klimaatmobiel.domain.OrderItem
 import com.klimaatmobiel.domain.Product
 import kotlinx.android.synthetic.main.grid_list_item.view.*
-import kotlinx.android.synthetic.main.product_list_item.view.*
 
 class ProductListAdapter( val onClickListener: OnClickListener) : ListAdapter<Product, ProductListAdapter.ProductViewHolder>(DiffCallback) {
 
@@ -40,7 +38,7 @@ class ProductListAdapter( val onClickListener: OnClickListener) : ListAdapter<Pr
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val product = getItem(position)
-        holder.itemView.add.setOnClickListener {
+        holder.itemView.add_to_cart_image.setOnClickListener {
             onClickListener.onClick(product)
         }
         holder.bind(product)

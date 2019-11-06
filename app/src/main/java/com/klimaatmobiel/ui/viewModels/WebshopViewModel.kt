@@ -105,10 +105,4 @@ class WebshopViewModel(group : Group) : ViewModel() {
         }
 
     }
-
-
-
-
-
-
 }

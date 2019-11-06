@@ -2,6 +2,8 @@ package com.klimaatmobiel.ui.fragments
 
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -54,8 +56,25 @@ class WebshopFragment : Fragment() {
             viewModel.addProductToOrder(it)
         })
 
+        binding.filterText.addTextChangedListener(object: TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val ad = binding.productsList.adapter as ProductListAdapter
+                // Resubmit the full list
+                ad.submitList(viewModel.group.value!!.project.products)
+                ad.notifyDataSetChanged()
+
+                if(!s.isNullOrEmpty()){
+                    ad.filter.filter(s)
+                }
+            }
+        })
 
         return binding.root
-
     }
 }

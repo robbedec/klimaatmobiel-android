@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projecten3android.databinding.ProductListItemBinding
+import com.klimaatmobiel.domain.OrderItem
 import com.klimaatmobiel.domain.Product
 import kotlinx.android.synthetic.main.product_list_item.view.*
 
@@ -22,11 +23,11 @@ class ProductListAdapter( val onClickListener: OnClickListener) : ListAdapter<Pr
 
     companion object DiffCallback : DiffUtil.ItemCallback<Product>() {
         override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {
-            return oldItem === newItem
+            return oldItem.productId == newItem.productId
         }
 
         override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
-            return oldItem.productId == newItem.productId
+            return oldItem === newItem
         }
     }
 

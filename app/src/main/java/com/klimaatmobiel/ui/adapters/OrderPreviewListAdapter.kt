@@ -24,11 +24,11 @@ class OrderPreviewListAdapter(val onClickListenerAdd: OnClickListener, val onCli
 
     companion object DiffCallback : DiffUtil.ItemCallback<OrderItem>() {
         override fun areItemsTheSame(oldItem: OrderItem, newItem: OrderItem): Boolean {
-            return oldItem === newItem
+            return oldItem.productId == newItem.productId
         }
 
         override fun areContentsTheSame(oldItem: OrderItem, newItem: OrderItem): Boolean {
-            return oldItem.productId == newItem.productId
+            return oldItem === newItem
         }
     }
 

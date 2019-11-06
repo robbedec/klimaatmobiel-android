@@ -21,7 +21,7 @@ fun listDataProductsBinding(recyclerView: RecyclerView, data: List<Product>) {
 @BindingAdapter("listDataOrderPreview")
 fun listDataOrderPreviewBinding(recyclerView: RecyclerView, data: List<OrderItem>?) {
     val adapter = recyclerView.adapter as OrderPreviewListAdapter
-    adapter.submitList(data)
+    adapter.submitList(if (data != null) ArrayList(data!!) else null)
 }
 
 

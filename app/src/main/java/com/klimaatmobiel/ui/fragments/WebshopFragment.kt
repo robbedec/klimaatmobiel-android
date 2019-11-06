@@ -52,19 +52,6 @@ class WebshopFragment : Fragment() {
 
         binding.productsList.adapter = ProductListAdapter(ProductListAdapter.OnClickListener {
             viewModel.addProductToOrder(it)
-
-
-            // refresht alles van de order recyclerview, is niet goed
-            binding.orderPreviewList.adapter = OrderPreviewListAdapter(OrderPreviewListAdapter.OnClickListener{ // add
-                viewModel.changeOrderItemAmount(it, true)
-
-            }, OrderPreviewListAdapter.OnClickListener{// minus
-                viewModel.changeOrderItemAmount(it, false)
-
-            })
-
-
-
         })
 
 

@@ -88,7 +88,11 @@ class WebshopViewModel(group : Group) : ViewModel() {
     fun changeOrderItemAmount(oi: OrderItem, add: Boolean){
         if(add){
 
-            //_group.value!!.findOrderItemById(oi.orderItemId)!!.amount = oi.amount + 1
+            _group.value!!.findOrderItemById(oi.orderItemId)!!.amount = oi.amount + 1
+            _group.value!!.order.totalOrderPrice += oi.product!!.price
+
+            _group.value = _group.value
+
 
         } else {
 

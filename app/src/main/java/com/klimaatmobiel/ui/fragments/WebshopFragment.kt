@@ -11,8 +11,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 
 import com.example.projecten3android.R
 import com.example.projecten3android.databinding.FragmentWebshopBinding
@@ -51,11 +53,44 @@ class WebshopFragment : Fragment() {
         })
 
 
-
-        binding.productsList.adapter = ProductListAdapter(ProductListAdapter.OnClickListener {
+        val adapter = ProductListAdapter(ProductListAdapter.OnClickListener {
             viewModel.addProductToOrder(it)
         })
 
+        /**
+         * Decide when a list item should span 2 widths
+         *
+         * itemViewType = 0 -> HEADER
+         * itemViewType = 1 -> PRODUCT
+         */
+        val manager = GridLayoutManager(context, 2)
+        manager.spanSizeLookup = object: GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                return if(adapter.getItemViewType(position) == 1) {
+                    1
+                } else {
+                    2
+                }
+            }
+
+        }
+
+        binding.productsList.layoutManager = manager
+        binding.productsList.adapter = adapter
+
+        /**
+         *  Populate the [RecyclerView] when the data is received from the back-end
+         */
+        viewModel.group.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                adapter.addHeaderAndSubmitList(it.project.products)
+            }
+        })
+
+        /**
+         * Filter the product list
+         * Activates for every key-stroke
+         */
         binding.filterText.addTextChangedListener(object: TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
@@ -64,14 +99,16 @@ class WebshopFragment : Fragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val ad = binding.productsList.adapter as ProductListAdapter
-                // Resubmit the full list
-                ad.submitList(viewModel.group.value!!.project.products)
-                ad.notifyDataSetChanged()
 
                 if(!s.isNullOrEmpty()){
-                    ad.filter.filter(s)
+                    // Resubmit the full list and apply the new filter
+                    adapter.addHeaderAndSubmitList(viewModel.group.value!!.project.products)
+                    adapter.filter.filter(s)
+                } else {
+                    adapter.addHeaderAndSubmitList(viewModel.group.value!!.project.products)
                 }
+                adapter.notifyDataSetChanged()
+
             }
         })
 

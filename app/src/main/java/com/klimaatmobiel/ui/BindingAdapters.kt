@@ -21,7 +21,8 @@ import com.klimaatmobiel.ui.adapters.ProductListAdapter
 @BindingAdapter("listDataProducts")
 fun listDataProductsBinding(recyclerView: RecyclerView, data: List<Product>) {
     val adapter = recyclerView.adapter as ProductListAdapter
-    adapter.submitList(data)
+
+    adapter.convertAndSubmit(data)
 }
 @BindingAdapter("listDataOrderPreview")
 fun listDataOrderPreviewBinding(recyclerView: RecyclerView, data: List<OrderItem>?) {
@@ -67,6 +68,14 @@ fun btnCheckoutOrderBinding(btn: Button, totalPrice: Double) {
 @BindingAdapter("orderItemTotalPriceBinding")
 fun orderItemTotalPriceBinding(txtView: TextView, oi: OrderItem) {
     txtView.text = "€" + (oi.amount * oi.product!!.price).toString()
+}
+
+/**
+ * Bind the categoryName to the [TextView]
+ */
+@BindingAdapter("categorieNameBinding")
+fun categoryNameBinding(txtView: TextView, name: String) {
+    txtView.text = name
 }
 
 /**

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <variable
@@ -56,17 +57,16 @@
 
             <ImageView
                 android:id="@+id/add_to_cart_image"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginStart="16dp"
+                android:layout_width="99dp"
+                android:layout_height="49dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
+                android:contentDescription="@string/add_to_cart_description"
                 android:lineSpacingExtra="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/product_image"
-                app:srcCompat="@drawable/ic_add_shopping_cart_100dp"
-                android:contentDescription="@string/add_to_cart_description" />
+                app:srcCompat="@drawable/cart2_red" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

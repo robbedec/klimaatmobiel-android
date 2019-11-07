@@ -53,7 +53,7 @@
             android:id="@+id/webshop_button"
             android:layout_width="300sp"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/colorPrimary"
             android:onClick="@{() -> mainMenuViewModel.onClickNavigateToWebshop()}"
             android:text="@string/webshop_button_text"
             android:textColor="@color/white"

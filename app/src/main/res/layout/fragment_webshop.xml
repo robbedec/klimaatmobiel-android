@@ -89,7 +89,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cart_text"
                 app:listDataOrderPreview="@{webshopViewModel.group.order.orderItems}"
-                tools:itemCount="10"
+                tools:itemCount="3"
                 tools:listitem="@layout/order_preview_list_item" />
 
 
@@ -98,6 +98,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="21dp"
+                android:scrollbars="vertical"
                 android:layout_marginEnd="12dp"
                 android:layout_marginBottom="8dp"
                 app:groupSpentBinding="@{webshopViewModel.group.order.totalOrderPrice}"

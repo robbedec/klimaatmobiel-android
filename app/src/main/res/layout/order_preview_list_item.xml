@@ -37,14 +37,14 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
             app:srcCompat="@android:color/darker_gray" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/product_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:textColor="@color/colorBlack"
             android:textSize="22dp"
 
-            app:layout_constraintEnd_toStartOf="@+id/imageView3"
+            app:layout_constraintEnd_toStartOf="@+id/cart_remove_order_item"
             app:layout_constraintStart_toEndOf="@+id/product_image"
             app:layout_constraintTop_toTopOf="parent"
             app:productNameBinding="@{orderItem.product.productName}"
@@ -53,7 +53,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/cart_remove_order_item"
             android:layout_width="40dp"
             android:layout_height="40dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -61,7 +61,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
             app:srcCompat="@drawable/ic_remove_shopping_cart_red_40dp" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/total_order_item_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="19dp"
@@ -73,7 +73,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
             tools:text="€20"/>
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/product_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -81,10 +81,47 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
             android:textSize="15dp"
 
             app:layout_constraintStart_toEndOf="@+id/product_image"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/product_name"
             app:productPriceBinding="@{orderItem.product.price}"
             tools:text="Prijs: €20" />
 
+        <TextView
+            android:id="@+id/order_item_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:textColor="@color/colorBlack"
+            android:textSize="20dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="4dp"
+
+            app:layout_constraintBottom_toBottomOf="@+id/product_image"
+            app:layout_constraintStart_toEndOf="@+id/btn_minus"
+            app:layout_constraintTop_toBottomOf="@+id/product_price"
+            app:orderItemAmountBinding="@{orderItem.amount}"
+            tools:text="3" />
+
+        <ImageButton
+            android:id="@+id/btn_minus"
+            android:background="@android:color/transparent"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+          android:layout_marginLeft="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/product_image"
+            app:layout_constraintStart_toEndOf="@+id/product_image"
+            app:layout_constraintTop_toBottomOf="@+id/product_price"
+            app:srcCompat="@drawable/icons8_minus_48" />
+
+        <ImageButton
+            android:id="@+id/btn_plus"
+            android:background="@android:color/transparent"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginLeft="4dp"
+            app:layout_constraintBottom_toBottomOf="@+id/product_image"
+            app:layout_constraintStart_toEndOf="@+id/order_item_amount"
+            app:layout_constraintTop_toBottomOf="@+id/product_price"
+            app:srcCompat="@drawable/ic_add_green_40dp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

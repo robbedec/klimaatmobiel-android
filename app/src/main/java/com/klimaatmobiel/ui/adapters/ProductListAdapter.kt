@@ -176,15 +176,12 @@ sealed class DataItem {
     data class ProductItem(val product: Product): DataItem() {
         override val id = product.productId
         override val productName = product.productName
-        override val isProduct = true
     }
     data class Header(val name: String): DataItem() {
         override val id = Long.MIN_VALUE
         override val productName = name
-        override val isProduct = false
     }
 
     abstract val id: Long
     abstract val productName: String
-    abstract val isProduct: Boolean
 }

@@ -31,11 +31,13 @@ class BottomNavigationWebshopFragment : Fragment() {
         binding.setLifecycleOwner(this)
 
         val group = BottomNavigationWebshopFragmentArgs.fromBundle(arguments!!).group
+
+        (activity as MainActivity).setToolbarTitle("Klimaatmobiel" + " - " + group.groupName + " - " + group.project.projectName)
+
         viewModel = activity?.run {
             ViewModelProviders.of(this, WebshopViewModelFactory(group))[WebshopViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
         binding.viewModel = viewModel
-
 
         binding.bottomNavigationWebshop.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener {
             (activity as MainActivity).triggerWebshopBottomNavigation(it)

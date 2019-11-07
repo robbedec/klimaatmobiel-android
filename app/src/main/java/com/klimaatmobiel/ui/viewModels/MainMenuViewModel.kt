@@ -28,6 +28,9 @@ class MainMenuViewModel : ViewModel() {
 
 
 
+    init {
+        groupCode.value = "212345"
+    }
 
 
     fun onClickNavigateToWebshop(){

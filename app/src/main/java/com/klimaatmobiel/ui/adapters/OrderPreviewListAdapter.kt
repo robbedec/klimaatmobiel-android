@@ -10,7 +10,7 @@ import com.klimaatmobiel.domain.OrderItem
 import com.klimaatmobiel.domain.Product
 import kotlinx.android.synthetic.main.order_preview_list_item.view.*
 
-class OrderPreviewListAdapter(val onClickListenerAdd: OnClickListener, val onClickListenerMinus: OnClickListener) : ListAdapter<OrderItem, OrderPreviewListAdapter.OrderItemViewHolder>(DiffCallback) {
+class OrderPreviewListAdapter(val onClickListenerAdd: OnClickListener, val onClickListenerMinus: OnClickListener, val onClickListenerRemove: OnClickListener) : ListAdapter<OrderItem, OrderPreviewListAdapter.OrderItemViewHolder>(DiffCallback) {
 
 
     class OrderItemViewHolder(private var binding: OrderPreviewListItemBinding):
@@ -27,7 +27,8 @@ class OrderPreviewListAdapter(val onClickListenerAdd: OnClickListener, val onCli
         }
 
         override fun areContentsTheSame(oldItem: OrderItem, newItem: OrderItem): Boolean {
-            return oldItem.equals(newItem)
+
+            return false
         }
     }
 
@@ -38,11 +39,14 @@ class OrderPreviewListAdapter(val onClickListenerAdd: OnClickListener, val onCli
 
     override fun onBindViewHolder(holder: OrderItemViewHolder, position: Int) {
         val orderItem = getItem(position)
-        holder.itemView.add_amount_imgv.setOnClickListener {
+        holder.itemView.btn_plus.setOnClickListener {
             onClickListenerAdd.onClick(orderItem)
         }
-        holder.itemView.remove_amount_imgv.setOnClickListener {
+        holder.itemView.btn_minus.setOnClickListener {
             onClickListenerMinus.onClick(orderItem)
+        }
+        holder.itemView.cart_remove_order_item.setOnClickListener {
+            onClickListenerRemove.onClick(orderItem)
         }
         holder.bind(orderItem)
     }

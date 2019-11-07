@@ -66,8 +66,8 @@ class WebshopViewModel(group : Group) : ViewModel() {
                 } else {
                     _group.value!!.order.orderItems.add(orderItemRes.removedOrAddedOrderItem)
                 }
-                _group.value!!.order.totalOrderPrice = orderItemRes.totalOrderPrice
 
+                _group.value!!.order.totalOrderPrice = orderItemRes.totalOrderPrice
 
                 _group.value = _group.value // trigger live data change, moet wss niet?
 
@@ -87,22 +87,75 @@ class WebshopViewModel(group : Group) : ViewModel() {
 
     fun changeOrderItemAmount(oi: OrderItem, add: Boolean){
         if(add){
-
-            _group.value!!.findOrderItemById(oi.orderItemId)!!.amount = oi.amount + 1
-            _group.value!!.order.totalOrderPrice += oi.product!!.price
-
-            _group.value = _group.value
-
-
+            oi.amount++
+            updateOrderItem(oi);
         } else {
+            oi.amount--
+            if(oi.amount < 1) {
+                removeOrderItem(oi)
+            } else {
+                updateOrderItem(oi)
+            }
+        }
+    }
 
-            
-            // als io.amount < 1 remove orderItem from order
-            //_group.value!!.findOrderItemById(oi.orderItemId)!!.amount = oi.amount + 1
+
+    private fun updateOrderItem(oi: OrderItem){
+
+        coroutineScope.launch {
+
+            var updateOrderItemDeferred = KlimaatmobielApi.retrofitService.updateOrderItem(oi, oi.orderItemId)
+            try {
+                _status.value = KlimaatMobielApiStatus.LOADING
+                val orderItemRes = updateOrderItemDeferred.await()
 
 
+                _group.value!!.findOrderItemById(orderItemRes.removedOrAddedOrderItem.orderItemId)!!
+                    .amount = orderItemRes.removedOrAddedOrderItem.amount
+                _group.value!!.order.totalOrderPrice = orderItemRes.totalOrderPrice
 
+                _group.value = _group.value // trigger live data change, moet wss niet?
+
+                _status.value = KlimaatMobielApiStatus.DONE
+
+            }catch (e: HttpException) {
+                Timber.i(e.message())
+                _status.value = KlimaatMobielApiStatus.ERROR
+            }
+            catch (e: Exception) {
+                Timber.i(e.message)
+                _status.value = KlimaatMobielApiStatus.ERROR
+            }
         }
 
     }
+
+    fun removeOrderItem(oi : OrderItem){
+
+        coroutineScope.launch {
+            var removeOrderItemDeferred = KlimaatmobielApi.retrofitService.
+                removeOrderItemFromOrder(oi.orderItemId, group.value!!.order.orderId)
+            try {
+                _status.value = KlimaatMobielApiStatus.LOADING
+                val orderItemRes = removeOrderItemDeferred.await()
+
+                _group.value!!.order.orderItems.remove( _group.value!!.findOrderItemById(orderItemRes.removedOrAddedOrderItem.orderItemId)!!)
+                _group.value!!.order.totalOrderPrice = orderItemRes.totalOrderPrice
+
+                _group.value = _group.value // trigger live data change, moet wss niet?
+
+                _status.value = KlimaatMobielApiStatus.DONE
+
+            }catch (e: HttpException) {
+                Timber.i(e.message())
+                _status.value = KlimaatMobielApiStatus.ERROR
+            }
+            catch (e: Exception) {
+                Timber.i(e.message)
+                _status.value = KlimaatMobielApiStatus.ERROR
+            }
+        }
+    }
+
+
 }

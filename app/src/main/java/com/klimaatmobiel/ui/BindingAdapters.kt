@@ -22,7 +22,7 @@ import com.klimaatmobiel.ui.adapters.ProductListAdapter
 fun listDataProductsBinding(recyclerView: RecyclerView, data: List<Product>) {
     val adapter = recyclerView.adapter as ProductListAdapter
 
-    adapter.convertAndSubmit(data)
+    //adapter.convertAndSubmit(data)
 }
 @BindingAdapter("listDataOrderPreview")
 fun listDataOrderPreviewBinding(recyclerView: RecyclerView, data: List<OrderItem>?) {
@@ -35,12 +35,12 @@ fun listDataOrderPreviewBinding(recyclerView: RecyclerView, data: List<OrderItem
 
 @BindingAdapter("projectBudgetBinding")
 fun projectBudgetBinding(txtView: TextView,  budget: Double) {
-    txtView.text = "Budget: €" + budget.toString()
+    txtView.text = "Winkelmandje - €" + budget.toString() +" budget"
 }
 
 @BindingAdapter("groupSpentBinding")
 fun groupSpentBinding(txtView: TextView,  totalOrderPrice: Double) {
-    txtView.text = "Winkelmandje: €" + totalOrderPrice.toString()
+    txtView.text = "Totaal: €" + totalOrderPrice.toString()
 }
 
 @BindingAdapter("productNameBinding")

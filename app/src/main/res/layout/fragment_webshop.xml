@@ -52,6 +52,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
 
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/products_list"
@@ -101,6 +102,8 @@
                 android:scrollbars="vertical"
                 android:layout_marginEnd="12dp"
                 android:layout_marginBottom="8dp"
+                android:textColor="@color/colorBlack"
+
                 app:groupSpentBinding="@{webshopViewModel.group.order.totalOrderPrice}"
                 app:layout_constraintBottom_toTopOf="@+id/complete_order_button"
                 app:layout_constraintEnd_toEndOf="parent"

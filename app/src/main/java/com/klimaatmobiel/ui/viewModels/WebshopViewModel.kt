@@ -112,6 +112,7 @@ class WebshopViewModel(group : Group) : ViewModel() {
 
                 _group.value!!.findOrderItemById(orderItemRes.removedOrAddedOrderItem.orderItemId)!!
                     .amount = orderItemRes.removedOrAddedOrderItem.amount
+                _group.value!!.order.totalOrderPrice = orderItemRes.totalOrderPrice
 
                 _group.value = _group.value // trigger live data change, moet wss niet?
 

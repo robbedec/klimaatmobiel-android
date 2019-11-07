@@ -41,6 +41,10 @@ class MainMenuViewModel : ViewModel() {
             try {
                 _status.value = KlimaatMobielApiStatus.LOADING
                 val group = getGroupDeferred.await()
+
+                // Filter list by categoryname
+                group.project.products.toMutableList().sortBy { it.category!!.categoryName }
+
                 _navigateToWebshop.value = group
 
                 _status.value = KlimaatMobielApiStatus.DONE

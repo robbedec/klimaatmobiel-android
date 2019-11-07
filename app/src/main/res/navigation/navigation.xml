@@ -12,7 +12,8 @@
         tools:layout="@layout/fragment_main_menu">
         <action
             android:id="@+id/action_mainMenuFragment2_to_bottomNavigationWebshopFragment"
-            app:destination="@id/bottomNavigationWebshopFragment" />
+            app:destination="@id/bottomNavigationWebshopFragment"
+            app:enterAnim="@anim/slide_in_right" />
     </fragment>
     <fragment
         android:id="@+id/productDetailFragment"

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -15,20 +14,30 @@
         android:layout_height="match_parent"
         android:gravity="center_horizontal|center_vertical">
 
-        <TextView
-            android:id="@+id/klimaatmobiel_text"
+        <ImageView
+            android:id="@+id/logo_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/klimaatmobiel_text"
-            android:textSize="50sp"
+            android:layout_marginTop="50dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/go_logo" />
+
+        <ImageView
+            android:id="@+id/klimaatmobiel_image"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:srcCompat="@drawable/klimaatmobiel_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/logo_image"
+     />
 
         <EditText
             android:id="@+id/project_code_text"
-            android:layout_width="wrap_content"
+            android:layout_width="300sp"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/edit_text_hint"
@@ -37,15 +46,17 @@
             app:layout_constraintBottom_toTopOf="@+id/webshop_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/klimaatmobiel_text"
-            app:layout_constraintVertical_bias="0.82" />
+            app:layout_constraintTop_toBottomOf="@+id/klimaatmobiel_image"
+            app:layout_constraintVertical_bias="0.96" />
 
         <Button
             android:id="@+id/webshop_button"
-            android:layout_width="wrap_content"
+            android:layout_width="300sp"
             android:layout_height="wrap_content"
-            android:text="@string/webshop_button_text"
+            android:background="@color/colorPrimary"
             android:onClick="@{() -> mainMenuViewModel.onClickNavigateToWebshop()}"
+            android:text="@string/webshop_button_text"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -4,11 +4,13 @@
         android:id="@+id/nav_webshop"
         android:title="Webshop"
         android:checked="true"
+        android:icon="@drawable/cart2_red"
         >
     </item>
 
     <item
         android:id="@+id/nav_order"
-        android:title="Winkelmandje">
+        android:title="Winkelmandje"
+        android:icon="@drawable/ic_shopping_basket_red_24dp">
     </item>
 </menu>

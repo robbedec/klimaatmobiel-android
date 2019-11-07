@@ -24,16 +24,16 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/go_logo" />
 
-        <TextView
-            android:id="@+id/klimaatmobiel_text"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/klimaatmobiel_image"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/klimaatmobiel_text"
-            android:textSize="50sp"
+            app:srcCompat="@drawable/klimaatmobiel_logo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/logo_image" />
+            app:layout_constraintTop_toBottomOf="@id/logo_image"
+     />
 
         <EditText
             android:id="@+id/project_code_text"
@@ -46,7 +46,7 @@
             app:layout_constraintBottom_toTopOf="@+id/webshop_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/klimaatmobiel_text"
+            app:layout_constraintTop_toBottomOf="@+id/klimaatmobiel_image"
             app:layout_constraintVertical_bias="0.96" />
 
         <Button

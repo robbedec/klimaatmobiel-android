@@ -50,6 +50,8 @@ class WebshopFragment : Fragment() {
             viewModel.changeOrderItemAmount(it, true)
         }, OrderPreviewListAdapter.OnClickListener{// minus
             viewModel.changeOrderItemAmount(it, false)
+        }, OrderPreviewListAdapter.OnClickListener{// delete
+            viewModel.changeOrderItemAmount(it, false)
         })
 
 

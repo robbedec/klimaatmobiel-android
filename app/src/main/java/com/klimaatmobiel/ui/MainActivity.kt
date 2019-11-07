@@ -28,6 +28,10 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    fun setToolbarTitle(titleString : String){
+        supportActionBar!!.title = titleString
+    }
+
 
 
 

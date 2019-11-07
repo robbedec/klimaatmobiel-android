@@ -17,7 +17,7 @@
     <string name="project_description">project omschrijving</string>
     <string name="project_title">Project naam</string>
     <string name="filter_hint">Filter op naam</string>
-    <string name="complete_order">Voltooi bestelling voor</string>
+    <string name="complete_order">Plaats bestelling</string>
     <string name="add_to_cart_description">Voeg het item toe aan de winkelmand</string>
     <string name="product_image_description">Product afbeelding</string>
 

@@ -8,11 +8,14 @@ class PusherApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-
+        appContext = this
         // Setup timber
         Timber.plant(Timber.DebugTree())
-
-
-
     }
+
+    companion object {
+        lateinit var appContext: PusherApplication
+            private set
+    }
+
 }

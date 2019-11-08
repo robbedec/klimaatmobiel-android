@@ -28,7 +28,7 @@ class OrderPreviewListAdapter(val onClickListenerAdd: OnClickListener, val onCli
 
         override fun areContentsTheSame(oldItem: OrderItem, newItem: OrderItem): Boolean {
 
-            return false
+            return oldItem == newItem
         }
     }
 

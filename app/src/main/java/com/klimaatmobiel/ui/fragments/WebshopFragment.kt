@@ -59,6 +59,20 @@ class WebshopFragment : Fragment() {
             viewModel.addProductToOrder(it)
         })
 
+
+
+
+        viewModel.group.observe(this, Observer{
+            if(viewModel.posToRefreshInOrderPreviewListItem != -1){
+                binding.orderPreviewList.adapter?.notifyItemChanged(viewModel.posToRefreshInOrderPreviewListItem)
+            }
+        })
+
+
+
+
+
+
         /**
          * Decide when a list item should span 2 widths
          *

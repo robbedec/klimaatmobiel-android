@@ -27,9 +27,11 @@ class WebshopViewModel(group : Group) : ViewModel() {
     private var _status = MutableLiveData<KlimaatMobielApiStatus>()
     val status: LiveData<KlimaatMobielApiStatus> get() = _status
 
+    var posToRefreshInOrderPreviewListItem: Int = -1;
 
     private var _group = MutableLiveData<Group>()
     val group: LiveData<Group> get() = _group
+
 
 
     private var viewModelJob = Job()
@@ -49,8 +51,8 @@ class WebshopViewModel(group : Group) : ViewModel() {
     fun addProductToOrder(product: Product){
 
 
-        coroutineScope.launch {
 
+        coroutineScope.launch {
 
             var addProductToOrderDeferred = KlimaatmobielApi.retrofitService.
                 addProductToOrder(OrderItem(0,1,null,product.productId, 0),_group.value!!.order!!.orderId)
@@ -63,9 +65,15 @@ class WebshopViewModel(group : Group) : ViewModel() {
                     _group.value!!.findOrderItemById(orderItemRes.removedOrAddedOrderItem.orderItemId)!!
                         .amount = orderItemRes.removedOrAddedOrderItem.amount
 
+                    posToRefreshInOrderPreviewListItem = _group.value!!.order.orderItems
+                        .indexOf(_group.value!!.findOrderItemById(orderItemRes.removedOrAddedOrderItem.orderItemId))
+
                 } else {
+                    posToRefreshInOrderPreviewListItem = -1
                     _group.value!!.order.orderItems.add(orderItemRes.removedOrAddedOrderItem)
                 }
+
+
 
                 _group.value!!.order.totalOrderPrice = orderItemRes.totalOrderPrice
 
@@ -109,10 +117,12 @@ class WebshopViewModel(group : Group) : ViewModel() {
                 _status.value = KlimaatMobielApiStatus.LOADING
                 val orderItemRes = updateOrderItemDeferred.await()
 
-
                 _group.value!!.findOrderItemById(orderItemRes.removedOrAddedOrderItem.orderItemId)!!
                     .amount = orderItemRes.removedOrAddedOrderItem.amount
                 _group.value!!.order.totalOrderPrice = orderItemRes.totalOrderPrice
+
+                posToRefreshInOrderPreviewListItem = _group.value!!.order.orderItems
+                    .indexOf(_group.value!!.findOrderItemById(orderItemRes.removedOrAddedOrderItem.orderItemId))
 
                 _group.value = _group.value // trigger live data change, moet wss niet?
 
@@ -141,6 +151,8 @@ class WebshopViewModel(group : Group) : ViewModel() {
 
                 _group.value!!.order.orderItems.remove( _group.value!!.findOrderItemById(orderItemRes.removedOrAddedOrderItem.orderItemId)!!)
                 _group.value!!.order.totalOrderPrice = orderItemRes.totalOrderPrice
+
+                posToRefreshInOrderPreviewListItem = -1
 
                 _group.value = _group.value // trigger live data change, moet wss niet?
 

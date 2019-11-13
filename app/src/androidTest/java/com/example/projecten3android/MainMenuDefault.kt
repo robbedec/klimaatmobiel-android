@@ -45,6 +45,18 @@ class MainMenuDefault {
     }
 
     @Test
+    fun testSnackbarShowOnLoadingError() {
+        onView(withId(R.id.project_code_text)).perform(typeText("give-error"))
+        onView(withId(R.id.webshop_button)).perform(click())
+
+        // Wait for the api to return an error.
+        SystemClock.sleep(3000)
+
+        onView(withId(com.google.android.material.R.id.snackbar_text))
+            .check(matches(withText(R.string.project_code_error)))
+    }
+
+    @Test
     fun testCheckIfRedirectedToWebshopCorrectProjectCode() {
         onView(withId(R.id.project_code_text)).perform(typeText("212345"))
         onView(withId(R.id.webshop_button)).perform(click())

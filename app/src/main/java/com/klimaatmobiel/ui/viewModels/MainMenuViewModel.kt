@@ -3,14 +3,12 @@ package com.klimaatmobiel.ui.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.klimaatmobiel.data.network.KlimaatmobielApi
 import com.klimaatmobiel.domain.Group
 import com.klimaatmobiel.domain.KlimaatmobielRepository
 import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import retrofit2.HttpException
 import timber.log.Timber
 
@@ -24,11 +22,6 @@ class MainMenuViewModel(private val repository: KlimaatmobielRepository) : ViewM
     private val _status = MutableLiveData<KlimaatMobielApiStatus>()
     val status: LiveData<KlimaatMobielApiStatus> get() = _status
 
-    private var viewModelJob = Job()
-    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-
-
-
     init {
         groupCode.value = "212345"
     }
@@ -37,8 +30,7 @@ class MainMenuViewModel(private val repository: KlimaatmobielRepository) : ViewM
     fun onClickNavigateToWebshop(){
 
         // check for empty groupCode
-
-        coroutineScope.launch {
+        viewModelScope.launch {
 
             //var getGroupDeferred = KlimaatmobielApi.retrofitService.getFullGroup(groupCode.value!!) // "1abcde"
             //var getGroupDeferred = KlimaatmobielApi.retrofitService.getFullGroup("212345") // "212345"
@@ -67,5 +59,10 @@ class MainMenuViewModel(private val repository: KlimaatmobielRepository) : ViewM
 
     fun onWebshopNavigated() {
         _navigateToWebshop.value = null
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelScope.cancel()
     }
 }

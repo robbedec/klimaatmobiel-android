@@ -3,12 +3,10 @@ package com.klimaatmobiel.ui.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.klimaatmobiel.domain.*
 import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import retrofit2.HttpException
 import timber.log.Timber
 
@@ -27,18 +25,13 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
 
 
 
-    private var viewModelJob = Job()
-    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-
-
-
     init {
         _group.value = group // de groep met het project end de order is hier beschikbaar
 
     }
 
     fun addProductToOrder(product: Product){
-        coroutineScope.launch {
+        viewModelScope.launch {
 
             val addProductToOrderDeferred = repository.addProductToOrder(OrderItem(0,1,null,product.productId, 0),_group.value!!.order.orderId)
             try {
@@ -95,7 +88,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
 
     private fun updateOrderItem(oi: OrderItem){
 
-        coroutineScope.launch {
+        viewModelScope.launch {
 
             val updateOrderItemDeferred = repository.updateOrderItem(oi, oi.orderItemId)
             try {
@@ -127,7 +120,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
 
     fun removeOrderItem(oi : OrderItem){
 
-        coroutineScope.launch {
+        viewModelScope.launch {
             val removeOrderItemDeferred = repository.removeOrderItemFromOrder(oi.orderItemId, group.value!!.order.orderId)
             try {
                 _status.value = KlimaatMobielApiStatus.LOADING
@@ -152,5 +145,9 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
         }
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        viewModelScope.cancel()
 
+    }
 }

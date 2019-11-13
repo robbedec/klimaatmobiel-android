@@ -3,31 +3,24 @@ package com.klimaatmobiel.ui.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.klimaatmobiel.data.network.KlimaatmobielApi
-import com.klimaatmobiel.domain.Group
-import com.klimaatmobiel.domain.Order
-import com.klimaatmobiel.domain.OrderItem
-import com.klimaatmobiel.domain.Product
+import com.klimaatmobiel.domain.*
 import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.HttpException
-import retrofit2.Response
 import timber.log.Timber
 
 
 
-class WebshopViewModel(group : Group) : ViewModel() {
+class WebshopViewModel(group: Group, private val repository: KlimaatmobielRepository) : ViewModel() {
 
 
     private var _status = MutableLiveData<KlimaatMobielApiStatus>()
     val status: LiveData<KlimaatMobielApiStatus> get() = _status
 
-    var posToRefreshInOrderPreviewListItem: Int = -1;
+    var posToRefreshInOrderPreviewListItem: Int = -1
 
     private var _group = MutableLiveData<Group>()
     val group: LiveData<Group> get() = _group
@@ -44,18 +37,10 @@ class WebshopViewModel(group : Group) : ViewModel() {
 
     }
 
-
-
-
-
     fun addProductToOrder(product: Product){
-
-
-
         coroutineScope.launch {
 
-            var addProductToOrderDeferred = KlimaatmobielApi.retrofitService.
-                addProductToOrder(OrderItem(0,1,null,product.productId, 0),_group.value!!.order!!.orderId)
+            val addProductToOrderDeferred = repository.addProductToOrder(OrderItem(0,1,null,product.productId, 0),_group.value!!.order.orderId)
             try {
                 _status.value = KlimaatMobielApiStatus.LOADING
                 val orderItemRes = addProductToOrderDeferred.await()
@@ -86,7 +71,7 @@ class WebshopViewModel(group : Group) : ViewModel() {
                 _status.value = KlimaatMobielApiStatus.ERROR
             }
             catch (e: Exception) {
-                Timber.i(e.message)
+                Timber.i(e)
                 _status.value = KlimaatMobielApiStatus.ERROR
             }
         }
@@ -96,7 +81,7 @@ class WebshopViewModel(group : Group) : ViewModel() {
     fun changeOrderItemAmount(oi: OrderItem, add: Boolean){
         if(add){
             oi.amount++
-            updateOrderItem(oi);
+            updateOrderItem(oi)
         } else {
             oi.amount--
             if(oi.amount < 1) {
@@ -112,7 +97,7 @@ class WebshopViewModel(group : Group) : ViewModel() {
 
         coroutineScope.launch {
 
-            var updateOrderItemDeferred = KlimaatmobielApi.retrofitService.updateOrderItem(oi, oi.orderItemId)
+            val updateOrderItemDeferred = repository.updateOrderItem(oi, oi.orderItemId)
             try {
                 _status.value = KlimaatMobielApiStatus.LOADING
                 val orderItemRes = updateOrderItemDeferred.await()
@@ -133,7 +118,7 @@ class WebshopViewModel(group : Group) : ViewModel() {
                 _status.value = KlimaatMobielApiStatus.ERROR
             }
             catch (e: Exception) {
-                Timber.i(e.message)
+                Timber.i(e)
                 _status.value = KlimaatMobielApiStatus.ERROR
             }
         }
@@ -143,8 +128,7 @@ class WebshopViewModel(group : Group) : ViewModel() {
     fun removeOrderItem(oi : OrderItem){
 
         coroutineScope.launch {
-            var removeOrderItemDeferred = KlimaatmobielApi.retrofitService.
-                removeOrderItemFromOrder(oi.orderItemId, group.value!!.order.orderId)
+            val removeOrderItemDeferred = repository.removeOrderItemFromOrder(oi.orderItemId, group.value!!.order.orderId)
             try {
                 _status.value = KlimaatMobielApiStatus.LOADING
                 val orderItemRes = removeOrderItemDeferred.await()
@@ -163,7 +147,6 @@ class WebshopViewModel(group : Group) : ViewModel() {
                 _status.value = KlimaatMobielApiStatus.ERROR
             }
             catch (e: Exception) {
-                Timber.i(e.message)
                 _status.value = KlimaatMobielApiStatus.ERROR
             }
         }

@@ -18,7 +18,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 
 import com.example.projecten3android.R
 import com.example.projecten3android.databinding.FragmentWebshopBinding
+import com.klimaatmobiel.data.network.KlimaatmobielApi
 import com.klimaatmobiel.domain.Group
+import com.klimaatmobiel.domain.KlimaatmobielRepository
 import com.klimaatmobiel.ui.ViewModelFactories.WebshopViewModelFactory
 import com.klimaatmobiel.ui.adapters.OrderPreviewListAdapter
 import com.klimaatmobiel.ui.adapters.ProductListAdapter
@@ -44,6 +46,7 @@ class WebshopFragment : Fragment() {
             ViewModelProviders.of(this)[WebshopViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
 
+
         binding.webshopViewModel = viewModel
 
         binding.orderPreviewList.adapter = OrderPreviewListAdapter(OrderPreviewListAdapter.OnClickListener{ // add
@@ -67,11 +70,6 @@ class WebshopFragment : Fragment() {
                 binding.orderPreviewList.adapter?.notifyItemChanged(viewModel.posToRefreshInOrderPreviewListItem)
             }
         })
-
-
-
-
-
 
         /**
          * Decide when a list item should span 2 widths

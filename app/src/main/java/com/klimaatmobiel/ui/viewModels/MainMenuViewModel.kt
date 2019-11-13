@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.klimaatmobiel.data.network.KlimaatmobielApi
 import com.klimaatmobiel.domain.Group
+import com.klimaatmobiel.domain.KlimaatmobielRepository
 import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -13,7 +14,7 @@ import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import timber.log.Timber
 
-class MainMenuViewModel : ViewModel() {
+class MainMenuViewModel(private val repository: KlimaatmobielRepository) : ViewModel() {
 
     val groupCode = MutableLiveData<String>()
 
@@ -40,7 +41,8 @@ class MainMenuViewModel : ViewModel() {
         coroutineScope.launch {
 
             //var getGroupDeferred = KlimaatmobielApi.retrofitService.getFullGroup(groupCode.value!!) // "1abcde"
-            var getGroupDeferred = KlimaatmobielApi.retrofitService.getFullGroup("212345") // "212345"
+            //var getGroupDeferred = KlimaatmobielApi.retrofitService.getFullGroup("212345") // "212345"
+            var getGroupDeferred = repository.getFullGroup("212345")
             try {
                 _status.value = KlimaatMobielApiStatus.LOADING
                 val group = getGroupDeferred.await()

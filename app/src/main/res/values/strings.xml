@@ -20,5 +20,6 @@
     <string name="complete_order">Plaats bestelling</string>
     <string name="add_to_cart_description">Voeg het item toe aan de winkelmand</string>
     <string name="product_image_description">Product afbeelding</string>
+    <string name="project_code_error">Er is iets fout gelopen!</string>
 
 </resources>

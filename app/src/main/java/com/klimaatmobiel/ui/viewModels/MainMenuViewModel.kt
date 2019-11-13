@@ -22,7 +22,9 @@ class MainMenuViewModel(private val repository: KlimaatmobielRepository) : ViewM
     private val _status = MutableLiveData<KlimaatMobielApiStatus>()
     val status: LiveData<KlimaatMobielApiStatus> get() = _status
 
+
     init {
+        // For testing purposes
         groupCode.value = "212345"
     }
 
@@ -32,9 +34,8 @@ class MainMenuViewModel(private val repository: KlimaatmobielRepository) : ViewM
         // check for empty groupCode
         viewModelScope.launch {
 
-            //var getGroupDeferred = KlimaatmobielApi.retrofitService.getFullGroup(groupCode.value!!) // "1abcde"
-            //var getGroupDeferred = KlimaatmobielApi.retrofitService.getFullGroup("212345") // "212345"
-            var getGroupDeferred = repository.getFullGroup("212345")
+            //var getGroupDeferred = repository.getFullGroup("212345")
+            var getGroupDeferred = repository.getFullGroup(groupCode.value ?: "")
             try {
                 _status.value = KlimaatMobielApiStatus.LOADING
                 val group = getGroupDeferred.await()

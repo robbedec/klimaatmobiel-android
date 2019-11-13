@@ -15,9 +15,11 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.projecten3android.R
 import com.example.projecten3android.databinding.FragmentMainMenuBinding
+import com.google.android.material.snackbar.Snackbar
 import com.klimaatmobiel.data.network.KlimaatmobielApi
 import com.klimaatmobiel.domain.Group
 import com.klimaatmobiel.domain.KlimaatmobielRepository
+import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
 import com.klimaatmobiel.ui.ViewModelFactories.MainMenuViewModelFactory
 import com.klimaatmobiel.ui.viewModels.MainMenuViewModel
 
@@ -45,6 +47,18 @@ class MainMenuFragment : Fragment() {
             if(it != null){
                 findNavController().navigate(MainMenuFragmentDirections.actionMainMenuFragment2ToBottomNavigationWebshopFragment(it))
                 viewModel.onWebshopNavigated()
+            }
+        })
+
+        viewModel.status.observe(this, Observer {
+            when(it) {
+                KlimaatMobielApiStatus.ERROR -> {
+                    Snackbar.make(
+                        activity!!.findViewById(android.R.id.content),
+                        getString(R.string.project_code_error),
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
             }
         })
 

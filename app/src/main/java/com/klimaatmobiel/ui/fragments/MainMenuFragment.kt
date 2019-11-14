@@ -15,7 +15,12 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.projecten3android.R
 import com.example.projecten3android.databinding.FragmentMainMenuBinding
+import com.google.android.material.snackbar.Snackbar
+import com.klimaatmobiel.data.network.KlimaatmobielApi
 import com.klimaatmobiel.domain.Group
+import com.klimaatmobiel.domain.KlimaatmobielRepository
+import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
+import com.klimaatmobiel.ui.ViewModelFactories.MainMenuViewModelFactory
 import com.klimaatmobiel.ui.viewModels.MainMenuViewModel
 
 /**
@@ -23,16 +28,18 @@ import com.klimaatmobiel.ui.viewModels.MainMenuViewModel
  */
 class MainMenuFragment : Fragment() {
 
-    private val viewModel: MainMenuViewModel by lazy {
-        ViewModelProviders.of(this).get(MainMenuViewModel::class.java)
-    }
+    private lateinit var viewModel: MainMenuViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-
-
         val binding = FragmentMainMenuBinding.inflate(inflater)
-        binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = this
+
+        val apiService = KlimaatmobielApi.retrofitService
+
+        val viewModelFactory = MainMenuViewModelFactory(KlimaatmobielRepository(apiService))
+
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(MainMenuViewModel::class.java)
 
         binding.mainMenuViewModel = viewModel
 
@@ -40,6 +47,18 @@ class MainMenuFragment : Fragment() {
             if(it != null){
                 findNavController().navigate(MainMenuFragmentDirections.actionMainMenuFragment2ToBottomNavigationWebshopFragment(it))
                 viewModel.onWebshopNavigated()
+            }
+        })
+
+        viewModel.status.observe(this, Observer {
+            when(it) {
+                KlimaatMobielApiStatus.ERROR -> {
+                    Snackbar.make(
+                        activity!!.findViewById(android.R.id.content),
+                        getString(R.string.project_code_error),
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
             }
         })
 

@@ -3,17 +3,16 @@ package com.klimaatmobiel.ui.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.klimaatmobiel.data.network.KlimaatmobielApi
 import com.klimaatmobiel.domain.Group
+import com.klimaatmobiel.domain.KlimaatmobielRepository
 import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import retrofit2.HttpException
 import timber.log.Timber
 
-class MainMenuViewModel : ViewModel() {
+class MainMenuViewModel(private val repository: KlimaatmobielRepository) : ViewModel() {
 
     val groupCode = MutableLiveData<String>()
 
@@ -23,12 +22,9 @@ class MainMenuViewModel : ViewModel() {
     private val _status = MutableLiveData<KlimaatMobielApiStatus>()
     val status: LiveData<KlimaatMobielApiStatus> get() = _status
 
-    private var viewModelJob = Job()
-    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
-
-
 
     init {
+        // For testing purposes
         groupCode.value = "212345"
     }
 
@@ -36,11 +32,10 @@ class MainMenuViewModel : ViewModel() {
     fun onClickNavigateToWebshop(){
 
         // check for empty groupCode
+        viewModelScope.launch {
 
-        coroutineScope.launch {
-
-            //var getGroupDeferred = KlimaatmobielApi.retrofitService.getFullGroup(groupCode.value!!) // "1abcde"
-            var getGroupDeferred = KlimaatmobielApi.retrofitService.getFullGroup("212345") // "212345"
+            //var getGroupDeferred = repository.getFullGroup("212345")
+            var getGroupDeferred = repository.getFullGroup(groupCode.value ?: "")
             try {
                 _status.value = KlimaatMobielApiStatus.LOADING
                 val group = getGroupDeferred.await()
@@ -65,5 +60,10 @@ class MainMenuViewModel : ViewModel() {
 
     fun onWebshopNavigated() {
         _navigateToWebshop.value = null
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelScope.cancel()
     }
 }

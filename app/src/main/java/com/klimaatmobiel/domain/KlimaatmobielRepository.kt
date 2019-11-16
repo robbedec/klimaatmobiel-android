@@ -10,6 +10,10 @@ class KlimaatmobielRepository(private val apiService: KlimaatmobielApiService) {
         return apiService.getFullGroup(groupCode)
     }
 
+    fun getProduct(projectId: Long, productId: Long) : Deferred<Product> {
+        return apiService.getProduct(projectId, productId)
+    }
+
     fun addProductToOrder(orderItem: OrderItem, orderId: Long): Deferred<RemoveOrAddedOrderItemDTO> {
         return apiService.addProductToOrder(orderItem, orderId)
     }

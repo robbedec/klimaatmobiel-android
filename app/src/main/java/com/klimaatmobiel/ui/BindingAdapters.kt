@@ -44,7 +44,7 @@ fun groupSpentBinding(txtView: TextView,  totalOrderPrice: Double) {
 }
 
 @BindingAdapter("productNameBinding")
-fun productNameBinding(txtView: TextView, name: String) {
+fun productNameBinding(txtView: TextView, name: String?) {
  txtView.text = name
 }
 

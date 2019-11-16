@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -42,7 +43,9 @@ class ProductDetailFragment : Fragment() {
 
         binding.productDetailViewModel = viewModel
 
-
+        viewModel.product.observe(viewLifecycleOwner, Observer {
+            binding.product = it
+        })
 
         return binding.root
     }

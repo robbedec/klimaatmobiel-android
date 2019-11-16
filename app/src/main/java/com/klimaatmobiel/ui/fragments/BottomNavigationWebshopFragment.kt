@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 
 import com.example.projecten3android.R
 import com.klimaatmobiel.ui.ViewModelFactories.WebshopViewModelFactory
@@ -50,6 +52,10 @@ class BottomNavigationWebshopFragment : Fragment() {
         binding.bottomNavigationWebshop.selectedItemId = R.id.nav_webshop
 
 
+        // Navigate to the product detail fragment
+        viewModel.navigateToWebshop.observe(this, Observer {
+            findNavController().navigate(BottomNavigationWebshopFragmentDirections.actionBottomNavigationWebshopFragmentToProductDetailFragment2())
+        })
 
         return binding.root
     }

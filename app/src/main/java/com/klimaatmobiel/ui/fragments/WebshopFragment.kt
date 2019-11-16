@@ -14,6 +14,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 
 import com.example.projecten3android.R
@@ -59,10 +60,8 @@ class WebshopFragment : Fragment() {
 
 
         val adapter = ProductListAdapter(ProductListAdapter.OnClickListener {
-            viewModel.addProductToOrder(it)
+            product, action ->  viewModel.onProductClicked(product, action)
         })
-
-
 
 
         viewModel.group.observe(this, Observer{

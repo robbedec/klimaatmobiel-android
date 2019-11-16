@@ -89,10 +89,10 @@ class ProductListAdapter(private val onClickListener: OnClickListener) : ListAda
         when(holder) {
             is ProductViewHolder -> {
                 val productItem = getItem(position) as DataItem.ProductItem
-                holder.itemView.add_to_cart_image.setOnClickListener {
-                    onClickListener.onClick(productItem.product)
-                }
-                holder.bind(productItem.product)
+                /*holder.itemView.add_to_cart_image.setOnClickListener {
+                    onClickListener.onClick(productItem.product, 0)
+                }*/
+                holder.bind(productItem.product, onClickListener)
             }
             is TextViewHolder -> {
                 val cat = getItem(position) as DataItem.Header
@@ -137,13 +137,14 @@ class ProductListAdapter(private val onClickListener: OnClickListener) : ListAda
         }
     }
 
-    class OnClickListener(val clickListener: (product: Product) -> Unit) {
-        fun onClick(product: Product) = clickListener(product)
+    class OnClickListener(val clickListener: (product: Product, action: Int) -> Unit) {
+        fun onClick(product: Product, action: Int) = clickListener(product, action)
     }
 
     class ProductViewHolder(private var binding: GridListItemBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(product: Product) {
+        fun bind(product: Product, clickListener: OnClickListener) {
             binding.product = product
+            binding.clickListener = clickListener
             binding.executePendingBindings()
         }
 

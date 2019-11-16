@@ -27,6 +27,9 @@
         <argument
             android:name="group"
             app:argType="com.klimaatmobiel.domain.Group" />
+        <action
+            android:id="@+id/action_bottomNavigationWebshopFragment_to_productDetailFragment2"
+            app:destination="@id/productDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/webshopFragment"

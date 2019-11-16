@@ -46,7 +46,7 @@ class MainMenuFragment : Fragment() {
         viewModel.navigateToWebshop.observe(this, Observer {
             if(it != null){
                 findNavController().navigate(MainMenuFragmentDirections.actionMainMenuFragment2ToBottomNavigationWebshopFragment(it))
-                viewModel.onWebshopNavigated()
+                //viewModel.onWebshopNavigated()
             }
         })
 

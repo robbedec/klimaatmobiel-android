@@ -63,5 +63,4 @@ class BottomNavigationWebshopFragment : Fragment() {
         return binding.root
     }
 
-
 }

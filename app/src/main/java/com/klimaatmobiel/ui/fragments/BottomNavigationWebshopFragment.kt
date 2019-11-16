@@ -54,7 +54,10 @@ class BottomNavigationWebshopFragment : Fragment() {
 
         // Navigate to the product detail fragment
         viewModel.navigateToWebshop.observe(this, Observer {
-            findNavController().navigate(BottomNavigationWebshopFragmentDirections.actionBottomNavigationWebshopFragmentToProductDetailFragment2())
+            findNavController().navigate(BottomNavigationWebshopFragmentDirections.actionBottomNavigationWebshopFragmentToProductDetailFragment2(
+                viewModel.navigateToWebshop.value!![0], // ProjectId
+                viewModel.navigateToWebshop.value!![1]  // ProductId
+            ))
         })
 
         return binding.root

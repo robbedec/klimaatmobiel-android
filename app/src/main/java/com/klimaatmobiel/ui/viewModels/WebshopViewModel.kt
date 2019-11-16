@@ -23,8 +23,8 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
     private var _group = MutableLiveData<Group>()
     val group: LiveData<Group> get() = _group
 
-    private val _navigateToWebshop = MutableLiveData<Long>()
-    val navigateToWebshop: LiveData<Long> get() = _navigateToWebshop
+    private val _navigateToWebshop = MutableLiveData<List<Long>>()
+    val navigateToWebshop: LiveData<List<Long>> get() = _navigateToWebshop
 
 
 
@@ -151,7 +151,10 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
     fun onProductClicked(product: Product, action: Int) {
         when(action) {
             0 -> addProductToOrder(product)
-            1 -> _navigateToWebshop.value = product.productId
+            1 -> {
+                _navigateToWebshop.value = listOf(product.projectId, product.productId)
+                Timber.i("productid: ${product.projectId} and ${product.productId}")
+            }
         }
     }
 

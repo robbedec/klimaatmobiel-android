@@ -17,6 +17,7 @@ import com.klimaatmobiel.data.network.KlimaatmobielApiService
 import com.klimaatmobiel.domain.KlimaatmobielRepository
 import com.klimaatmobiel.ui.ViewModelFactories.ProductDetailViewModelFactory
 import com.klimaatmobiel.ui.viewModels.ProductDetailViewModel
+import timber.log.Timber
 
 /**
  * Fragment that displays information about a specific product retrieved from the API.
@@ -34,7 +35,7 @@ class ProductDetailFragment : Fragment() {
 
         // Inject apiService into the ViewModel and request it.
         val apiService = KlimaatmobielApi.retrofitService
-        val viewModelFactory = ProductDetailViewModelFactory(KlimaatmobielRepository(apiService))
+        val viewModelFactory = ProductDetailViewModelFactory(KlimaatmobielRepository(apiService), ProductDetailFragmentArgs.fromBundle(requireArguments()).projectId, ProductDetailFragmentArgs.fromBundle(arguments!!).productId)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(ProductDetailViewModel::class.java)
 
         binding.productDetailViewModel = viewModel

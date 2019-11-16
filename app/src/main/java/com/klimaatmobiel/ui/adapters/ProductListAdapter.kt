@@ -89,9 +89,6 @@ class ProductListAdapter(private val onClickListener: OnClickListener) : ListAda
         when(holder) {
             is ProductViewHolder -> {
                 val productItem = getItem(position) as DataItem.ProductItem
-                /*holder.itemView.add_to_cart_image.setOnClickListener {
-                    onClickListener.onClick(productItem.product, 0)
-                }*/
                 holder.bind(productItem.product, onClickListener)
             }
             is TextViewHolder -> {

@@ -18,6 +18,7 @@ import com.example.projecten3android.databinding.FragmentProductDetailBinding
 import com.klimaatmobiel.data.network.KlimaatmobielApi
 import com.klimaatmobiel.data.network.KlimaatmobielApiService
 import com.klimaatmobiel.domain.KlimaatmobielRepository
+import com.klimaatmobiel.ui.MainActivity
 import com.klimaatmobiel.ui.ViewModelFactories.ProductDetailViewModelFactory
 import com.klimaatmobiel.ui.viewModels.ProductDetailViewModel
 import timber.log.Timber
@@ -36,6 +37,8 @@ class ProductDetailFragment : Fragment() {
         val binding = FragmentProductDetailBinding.inflate(inflater)
         binding.lifecycleOwner = this
 
+        (activity as MainActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
         // Inject apiService into the ViewModel and request it.
         val apiService = KlimaatmobielApi.retrofitService
         val viewModelFactory = ProductDetailViewModelFactory(KlimaatmobielRepository(apiService), ProductDetailFragmentArgs.fromBundle(requireArguments()).projectId, ProductDetailFragmentArgs.fromBundle(arguments!!).productId)
@@ -46,10 +49,6 @@ class ProductDetailFragment : Fragment() {
         viewModel.product.observe(viewLifecycleOwner, Observer {
             binding.product = it
         })
-
-        binding.returnImage.setOnClickListener {
-            activity!!.onBackPressed()
-        }
 
         return binding.root
     }

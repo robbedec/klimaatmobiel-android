@@ -37,6 +37,7 @@ class BottomNavigationWebshopFragment : Fragment() {
         val group = BottomNavigationWebshopFragmentArgs.fromBundle(arguments!!).group
 
         (activity as MainActivity).setToolbarTitle("Klimaatmobiel" + " - " + group.groupName + " - " + group.project.projectName)
+        (activity as MainActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         val apiService = KlimaatmobielApi.retrofitService
 
@@ -50,7 +51,6 @@ class BottomNavigationWebshopFragment : Fragment() {
             true
         })
         binding.bottomNavigationWebshop.selectedItemId = R.id.nav_webshop
-
 
         // Navigate to the product detail fragment
         viewModel.navigateToWebshop.observe(this, Observer {

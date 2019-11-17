@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/mainMenuFragment2">
+    app:startDestination="@+id/mainMenuFragment2">
 
     <fragment
         android:id="@+id/mainMenuFragment2"
@@ -14,12 +14,12 @@
             android:id="@+id/action_mainMenuFragment2_to_bottomNavigationWebshopFragment"
             app:destination="@id/bottomNavigationWebshopFragment"
             app:enterAnim="@anim/slide_in_right"
-            app:popUpTo="@+id/mainMenuFragment2" />
+            app:popUpTo="@+id/webshopFragment" />
     </fragment>
     <fragment
         android:id="@+id/productDetailFragment"
         android:name="com.klimaatmobiel.ui.fragments.ProductDetailFragment"
-        android:label="ProductDetailFragment" >
+        android:label="ProductDetailFragment">
         <argument
             android:name="projectId"
             app:argType="long" />
@@ -31,7 +31,7 @@
         android:id="@+id/bottomNavigationWebshopFragment"
         android:name="com.klimaatmobiel.ui.fragments.BottomNavigationWebshopFragment"
         android:label="fragment_bottom_navigation_webshop"
-        tools:layout="@layout/fragment_bottom_navigation_webshop" >
+        tools:layout="@layout/fragment_bottom_navigation_webshop">
         <argument
             android:name="group"
             app:argType="com.klimaatmobiel.domain.Group" />

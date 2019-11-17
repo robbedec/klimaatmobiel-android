@@ -54,18 +54,6 @@ class ProductListAdapter(private val onClickListener: OnClickListener) : ListAda
         }
     }
 
-    /**
-     * Convert a list of [Product] to a list of [DataItem.ProductItem]
-     * Submit the converted list to show filtered result
-     */
-    fun convertAndSubmit(list: List<Product>){
-        var cList: MutableList<DataItem.ProductItem> = ArrayList()
-        list.forEach{
-            cList.add(DataItem.ProductItem(it))
-        }
-        submitList(cList as List<DataItem>?)
-    }
-
     companion object DiffCallback : DiffUtil.ItemCallback<DataItem>() {
         override fun areItemsTheSame(oldItem: DataItem, newItem: DataItem): Boolean {
             return oldItem.id == newItem.id

@@ -32,7 +32,7 @@ class BottomNavigationWebshopFragment : Fragment() {
 
 
         val binding = FragmentBottomNavigationWebshopBinding.inflate(inflater)
-        binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = this
 
         val group = BottomNavigationWebshopFragmentArgs.fromBundle(arguments!!).group
 

@@ -47,6 +47,10 @@ class ProductDetailFragment : Fragment() {
             binding.product = it
         })
 
+        binding.returnImage.setOnClickListener {
+            activity!!.onBackPressed()
+        }
+
         return binding.root
     }
 }

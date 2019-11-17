@@ -48,7 +48,6 @@ fun productNameBinding(txtView: TextView, name: String?) {
  txtView.text = name
 }
 
-
 @BindingAdapter("productPriceBinding")
 fun productPriceBinding(txtView: TextView, price: Double) {
     txtView.text = "Prijs: €" + price.toString()

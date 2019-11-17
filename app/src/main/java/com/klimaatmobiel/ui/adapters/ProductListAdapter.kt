@@ -130,6 +130,7 @@ class ProductListAdapter(private val onClickListener: OnClickListener) : ListAda
 
             withContext(Dispatchers.Main) {
                 submitList(sList)
+                notifyDataSetChanged()
             }
         }
     }

@@ -40,8 +40,8 @@
             app:destination="@id/productDetailFragment"
             app:enterAnim="@anim/slide_in_right"
             app:launchSingleTop="false"
-            app:popUpTo="@+id/bottomNavigationWebshopFragment"
-            app:popUpToInclusive="true" />
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popUpTo="@+id/webshopFragment" />
     </fragment>
     <fragment
         android:id="@+id/webshopFragment"

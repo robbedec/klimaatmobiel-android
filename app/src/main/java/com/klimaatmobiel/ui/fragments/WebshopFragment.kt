@@ -36,6 +36,7 @@ class WebshopFragment : Fragment() {
 
 
     private lateinit var viewModel: WebshopViewModel
+    //private lateinit var binding: WebshopFragmentBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -106,24 +107,27 @@ class WebshopFragment : Fragment() {
          */
         binding.filterText.addTextChangedListener(object: TextWatcher {
             override fun afterTextChanged(s: Editable?) {
+                Timber.i("1")
+
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                Timber.i("2")
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
+                Timber.i("removed")
                 if(!s.isNullOrEmpty()){
                     // Resubmit the full list and apply the new filter
-                    adapter.addHeaderAndSubmitList(viewModel.group.value!!.project.products)
                     adapter.filter.filter(s)
                 } else {
                     adapter.addHeaderAndSubmitList(viewModel.group.value!!.project.products)
                 }
                 adapter.notifyDataSetChanged()
-
             }
         })
+
+
 
         return binding.root
     }

@@ -33,6 +33,10 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
 
     }
 
+    fun onDetailNavigated() {
+        _navigateToWebshop.value = null
+    }
+
     fun addProductToOrder(product: Product){
         viewModelScope.launch {
 

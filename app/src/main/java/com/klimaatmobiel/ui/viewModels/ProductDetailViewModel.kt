@@ -24,7 +24,7 @@ class ProductDetailViewModel(private val repository: KlimaatmobielRepository, pr
         loadProduct()
     }
 
-    fun loadProduct() {
+    private fun loadProduct() {
         viewModelScope.launch {
             val getProductDeferred = repository.getProduct(projectId, productId)
             try {
@@ -32,7 +32,6 @@ class ProductDetailViewModel(private val repository: KlimaatmobielRepository, pr
                 val productRes = getProductDeferred.await()
                 _product.value = productRes
                 _status.value = KlimaatMobielApiStatus.DONE
-                Timber.i("${product.value!!.productName}")
 
             } catch (e: HttpException) {
                 Timber.i(e.message())

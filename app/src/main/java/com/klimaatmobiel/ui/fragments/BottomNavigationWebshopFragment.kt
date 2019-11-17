@@ -61,7 +61,6 @@ class BottomNavigationWebshopFragment : Fragment() {
                         viewModel.navigateToWebshop.value!![1]  // ProductId
                     )
                 )
-
                 viewModel.onDetailNavigated()
             }
         })

@@ -102,6 +102,8 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
                 posToRefreshInOrderPreviewListItem = _group.value!!.order.orderItems
                     .indexOf(_group.value!!.findOrderItemById(orderItemRes.removedOrAddedOrderItem.orderItemId))
 
+
+
                 _group.value = _group.value // trigger live data change, moet wss niet?
 
                 _status.value = KlimaatMobielApiStatus.DONE

@@ -7,6 +7,7 @@ import kotlinx.coroutines.Deferred
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.klimaatmobiel.domain.DTOs.RemoveOrAddedOrderItemDTO
 import com.klimaatmobiel.domain.OrderItem
+import com.klimaatmobiel.domain.Product
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -36,6 +37,9 @@ interface KlimaatmobielApiService {
     @GET("group/project/{groupCode}")
     fun getFullGroup(@Path("groupCode") groupCode: String):
             Deferred<Group>
+
+    @GET("project/{projectCode}/products/{productCode}")
+    fun getProduct(@Path("projectCode") projectCode: Long, @Path("productCode") productCode: Long): Deferred<Product>
 
 
     @PUT("order/addOrderItem/{orderId}" )

@@ -23,11 +23,18 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
     private var _group = MutableLiveData<Group>()
     val group: LiveData<Group> get() = _group
 
+    private val _navigateToWebshop = MutableLiveData<List<Long>>()
+    val navigateToWebshop: LiveData<List<Long>> get() = _navigateToWebshop
+
 
 
     init {
         _group.value = group // de groep met het project end de order is hier beschikbaar
 
+    }
+
+    fun onDetailNavigated() {
+        _navigateToWebshop.value = null
     }
 
     fun addProductToOrder(product: Product){
@@ -147,9 +154,22 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
         }
     }
 
+    fun onProductClicked(product: Product, action: Int) {
+        when(action) {
+            0 -> addProductToOrder(product)
+            1 -> {
+                _navigateToWebshop.value = listOf(product.projectId, product.productId)
+                Timber.i("productid: ${product.projectId} and ${product.productId}")
+            }
+        }
+    }
+
+    fun onErrorShown() {
+        _status.value = null
+    }
+
     override fun onCleared() {
         super.onCleared()
         viewModelScope.cancel()
-
     }
 }

@@ -14,8 +14,7 @@ import com.klimaatmobiel.domain.OrderItem
 import com.klimaatmobiel.domain.Product
 import com.klimaatmobiel.ui.adapters.OrderPreviewListAdapter
 import com.klimaatmobiel.ui.adapters.ProductListAdapter
-
-
+import timber.log.Timber
 
 
 @BindingAdapter("listDataProducts")
@@ -44,10 +43,16 @@ fun groupSpentBinding(txtView: TextView,  totalOrderPrice: Double) {
 }
 
 @BindingAdapter("productNameBinding")
-fun productNameBinding(txtView: TextView, name: String) {
+fun productNameBinding(txtView: TextView, name: String?) {
  txtView.text = name
 }
 
+@BindingAdapter("productNameAndCategoryBinding")
+fun productNameAndCategoryBinding(txtView: TextView, product: Product?) {
+   // Timber.i("${product.productName} (${product.category?.categoryName})")
+    if(product != null) txtView.text = "${product.productName} (${product.category?.categoryName})"
+
+}
 
 @BindingAdapter("productPriceBinding")
 fun productPriceBinding(txtView: TextView, price: Double) {

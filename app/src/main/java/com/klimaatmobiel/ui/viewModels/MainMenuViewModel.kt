@@ -45,6 +45,8 @@ class MainMenuViewModel(private val repository: KlimaatmobielRepository) : ViewM
 
                 _navigateToWebshop.value = group
 
+                repository.refreshProducts(group.project.products)
+
                 _status.value = KlimaatMobielApiStatus.DONE
 
             }catch (e: HttpException) {

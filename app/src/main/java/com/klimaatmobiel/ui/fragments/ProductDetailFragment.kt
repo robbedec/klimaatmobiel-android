@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 
 import com.example.projecten3android.R
 import com.example.projecten3android.databinding.FragmentProductDetailBinding
+import com.klimaatmobiel.data.database.getDatabase
 import com.klimaatmobiel.data.network.KlimaatmobielApi
 import com.klimaatmobiel.data.network.KlimaatmobielApiService
 import com.klimaatmobiel.domain.KlimaatmobielRepository
@@ -39,9 +40,9 @@ class ProductDetailFragment : Fragment() {
 
         (activity as MainActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        // Inject apiService into the ViewModel and request it.
+        // Inject apiService and database into the ViewModel and request it.
         val apiService = KlimaatmobielApi.retrofitService
-        val viewModelFactory = ProductDetailViewModelFactory(KlimaatmobielRepository(apiService), ProductDetailFragmentArgs.fromBundle(requireArguments()).projectId, ProductDetailFragmentArgs.fromBundle(arguments!!).productId)
+        val viewModelFactory = ProductDetailViewModelFactory(KlimaatmobielRepository(apiService, getDatabase(context!!.applicationContext)), ProductDetailFragmentArgs.fromBundle(requireArguments()).projectId, ProductDetailFragmentArgs.fromBundle(arguments!!).productId)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(ProductDetailViewModel::class.java)
 
         binding.productDetailViewModel = viewModel

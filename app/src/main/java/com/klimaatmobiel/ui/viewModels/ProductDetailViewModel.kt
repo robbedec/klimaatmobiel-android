@@ -13,34 +13,16 @@ import timber.log.Timber
 
 class ProductDetailViewModel(private val repository: KlimaatmobielRepository, private val projectId: Long, private val productId: Long) : ViewModel() {
 
-    private var _status = MutableLiveData<KlimaatMobielApiStatus>()
-    val status: LiveData<KlimaatMobielApiStatus> get() = _status
-
     private var _product = MutableLiveData<Product>()
     val product: LiveData<Product> get() = _product
 
     init {
-        Timber.i("$projectId and $productId")
         loadProduct()
     }
 
     private fun loadProduct() {
         viewModelScope.launch {
-            val getProductDeferred = repository.getProduct(projectId, productId)
-            try {
-                _status.value = KlimaatMobielApiStatus.LOADING
-                val productRes = getProductDeferred.await()
-                _product.value = productRes
-                _status.value = KlimaatMobielApiStatus.DONE
-
-            } catch (e: HttpException) {
-                Timber.i(e.message())
-                _status.value = KlimaatMobielApiStatus.ERROR
-            }
-            catch (e: Exception) {
-                Timber.i(e)
-                _status.value = KlimaatMobielApiStatus.ERROR
-            }
+            _product.value = repository.getProduct(projectId, productId)
         }
     }
 }

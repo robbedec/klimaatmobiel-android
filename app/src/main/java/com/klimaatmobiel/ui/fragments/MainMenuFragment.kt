@@ -16,6 +16,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.projecten3android.R
 import com.example.projecten3android.databinding.FragmentMainMenuBinding
 import com.google.android.material.snackbar.Snackbar
+import com.klimaatmobiel.data.database.ProductsDatabase
+import com.klimaatmobiel.data.database.getDatabase
 import com.klimaatmobiel.data.network.KlimaatmobielApi
 import com.klimaatmobiel.domain.Group
 import com.klimaatmobiel.domain.KlimaatmobielRepository
@@ -37,7 +39,7 @@ class MainMenuFragment : Fragment() {
 
         val apiService = KlimaatmobielApi.retrofitService
 
-        val viewModelFactory = MainMenuViewModelFactory(KlimaatmobielRepository(apiService))
+        val viewModelFactory = MainMenuViewModelFactory(KlimaatmobielRepository(apiService, getDatabase(context!!.applicationContext)))
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(MainMenuViewModel::class.java)
 

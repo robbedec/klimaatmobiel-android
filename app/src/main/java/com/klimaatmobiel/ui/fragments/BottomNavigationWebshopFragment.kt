@@ -15,6 +15,7 @@ import com.klimaatmobiel.ui.ViewModelFactories.WebshopViewModelFactory
 import com.klimaatmobiel.ui.viewModels.WebshopViewModel
 import com.example.projecten3android.databinding.FragmentBottomNavigationWebshopBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.klimaatmobiel.data.database.getDatabase
 import com.klimaatmobiel.data.network.KlimaatmobielApi
 import com.klimaatmobiel.domain.KlimaatmobielRepository
 import com.klimaatmobiel.ui.MainActivity
@@ -42,7 +43,7 @@ class BottomNavigationWebshopFragment : Fragment() {
         val apiService = KlimaatmobielApi.retrofitService
 
         viewModel = activity?.run {
-            ViewModelProviders.of(this, WebshopViewModelFactory(group, KlimaatmobielRepository(apiService)))[WebshopViewModel::class.java]
+            ViewModelProviders.of(this, WebshopViewModelFactory(group, KlimaatmobielRepository(apiService, getDatabase(context!!.applicationContext))))[WebshopViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
         binding.viewModel = viewModel
 

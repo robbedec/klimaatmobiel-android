@@ -19,9 +19,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 
 import com.example.projecten3android.R
 import com.example.projecten3android.databinding.FragmentWebshopBinding
+import com.google.android.material.snackbar.Snackbar
 import com.klimaatmobiel.data.network.KlimaatmobielApi
 import com.klimaatmobiel.domain.Group
 import com.klimaatmobiel.domain.KlimaatmobielRepository
+import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
 import com.klimaatmobiel.ui.ViewModelFactories.WebshopViewModelFactory
 import com.klimaatmobiel.ui.adapters.OrderPreviewListAdapter
 import com.klimaatmobiel.ui.adapters.ProductListAdapter
@@ -67,6 +69,19 @@ class WebshopFragment : Fragment() {
         viewModel.group.observe(this, Observer{
             if(viewModel.posToRefreshInOrderPreviewListItem != -1){
                 binding.orderPreviewList.adapter?.notifyItemChanged(viewModel.posToRefreshInOrderPreviewListItem)
+            }
+        })
+
+        viewModel.status.observe(this, Observer {
+            when(it) {
+                KlimaatMobielApiStatus.ERROR -> {
+                    Snackbar.make(
+                        activity!!.findViewById(android.R.id.content),
+                        getString(R.string.project_code_error),
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                    viewModel.onErrorShown()
+                }
             }
         })
 

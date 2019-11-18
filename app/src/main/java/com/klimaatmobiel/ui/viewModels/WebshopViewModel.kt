@@ -162,6 +162,10 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
         }
     }
 
+    fun onErrorShown() {
+        _status.value = null
+    }
+
     override fun onCleared() {
         super.onCleared()
         viewModelScope.cancel()

@@ -21,5 +21,6 @@
     <string name="add_to_cart_description">Voeg het item toe aan de winkelmand</string>
     <string name="product_image_description">Product afbeelding</string>
     <string name="project_code_error">Er is iets fout gelopen!</string>
+    <string name="loading_webshop_hint">Loading webshop</string>
 
 </resources>

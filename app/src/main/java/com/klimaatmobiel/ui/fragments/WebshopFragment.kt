@@ -118,7 +118,9 @@ class WebshopFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if(!s.isNullOrEmpty()){
                     // Resubmit the full list and apply the new filter
-                    adapter.filter.filter(s)
+//                    adapter.filter.filter(s)
+                    viewModel.filterList(s)
+                    adapter.addHeaderAndSubmitList(viewModel.filteredList.value)
                 } else {
                     adapter.addHeaderAndSubmitList(viewModel.group.value!!.project.products)
                 }
@@ -128,10 +130,11 @@ class WebshopFragment : Fragment() {
 
         var productList = viewModel.group.value!!.project.products
         val cats = productList.map { prod -> prod.category!!.categoryName }.toSortedSet()
-        cats.add("")
+        val catList = listOf<String>("  GEEN FILTER  ") + cats.toList()
 
-        val dropAdapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, cats.toList())
-        dropAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        val dropAdapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, catList)
+
+
         binding.positionSpinner.adapter = dropAdapter
 
         binding.positionSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {

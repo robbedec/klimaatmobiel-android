@@ -23,6 +23,9 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
     private var _group = MutableLiveData<Group>()
     val group: LiveData<Group> get() = _group
 
+    private var _filteredList = MutableLiveData<List<Product>>()
+    val filteredList: LiveData<List<Product>> get() = _filteredList
+
     private val _navigateToWebshop = MutableLiveData<List<Long>>()
     val navigateToWebshop: LiveData<List<Long>> get() = _navigateToWebshop
 
@@ -30,7 +33,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
 
     init {
         _group.value = group // de groep met het project end de order is hier beschikbaar
-
+        _filteredList.value = group.project.products
     }
 
     fun onDetailNavigated() {
@@ -77,6 +80,11 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
         }
     }
 
+    fun filterList(c: CharSequence) {
+        _filteredList.value = _group.value!!.project.products.filter { product ->
+            product.productName.toLowerCase().contains(c.toString().toLowerCase())
+        }
+    }
 
     fun changeOrderItemAmount(oi: OrderItem, add: Boolean){
         if(add){

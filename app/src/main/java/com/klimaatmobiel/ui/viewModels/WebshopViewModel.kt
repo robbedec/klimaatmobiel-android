@@ -29,6 +29,8 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
     private val _navigateToWebshop = MutableLiveData<List<Long>>()
     val navigateToWebshop: LiveData<List<Long>> get() = _navigateToWebshop
 
+    val testScore = 10.0
+
 
 
     init {

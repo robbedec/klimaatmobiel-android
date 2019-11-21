@@ -9,6 +9,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -29,7 +32,9 @@ import com.klimaatmobiel.ui.adapters.OrderPreviewListAdapter
 import com.klimaatmobiel.ui.adapters.ProductListAdapter
 import com.klimaatmobiel.ui.viewModels.MainMenuViewModel
 import com.klimaatmobiel.ui.viewModels.WebshopViewModel
+import kotlinx.android.synthetic.main.fragment_webshop.*
 import timber.log.Timber
+import java.util.*
 
 /**
  * A simple [Fragment] subclass.
@@ -52,24 +57,8 @@ class WebshopFragment : Fragment() {
 
         binding.webshopViewModel = viewModel
 
-        binding.orderPreviewList.adapter = OrderPreviewListAdapter(OrderPreviewListAdapter.OnClickListener{ // add
-            viewModel.changeOrderItemAmount(it, true)
-        }, OrderPreviewListAdapter.OnClickListener{// minus
-            viewModel.changeOrderItemAmount(it, false)
-        }, OrderPreviewListAdapter.OnClickListener{// delete
-            viewModel.removeOrderItem(it)
-        })
-
-
         val adapter = ProductListAdapter(ProductListAdapter.OnClickListener {
             product, action ->  viewModel.onProductClicked(product, action)
-        })
-
-
-        viewModel.group.observe(this, Observer{
-            if(viewModel.posToRefreshInOrderPreviewListItem != -1){
-                binding.orderPreviewList.adapter?.notifyItemChanged(viewModel.posToRefreshInOrderPreviewListItem)
-            }
         })
 
         viewModel.status.observe(this, Observer {
@@ -121,7 +110,6 @@ class WebshopFragment : Fragment() {
          */
         binding.filterText.addTextChangedListener(object: TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -130,13 +118,36 @@ class WebshopFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if(!s.isNullOrEmpty()){
                     // Resubmit the full list and apply the new filter
-                    adapter.filter.filter(s)
+//                    adapter.filter.filter(s)
+                    viewModel.filterList(s)
+                    adapter.addHeaderAndSubmitList(viewModel.filteredList.value)
                 } else {
                     adapter.addHeaderAndSubmitList(viewModel.group.value!!.project.products)
                 }
                 adapter.notifyDataSetChanged()
             }
         })
+
+        var productList = viewModel.group.value!!.project.products
+        val cats = productList.map { prod -> prod.category!!.categoryName }.toSortedSet()
+        val catList = listOf<String>("  GEEN FILTER  ") + cats.toList()
+
+        val dropAdapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, catList)
+
+
+        binding.positionSpinner.adapter = dropAdapter
+
+        binding.positionSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                val item = dropAdapter.getItem(position)
+
+            }
+        }
+
         return binding.root
     }
 }

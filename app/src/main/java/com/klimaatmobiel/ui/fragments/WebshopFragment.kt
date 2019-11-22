@@ -9,22 +9,32 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 
 import com.example.projecten3android.R
 import com.example.projecten3android.databinding.FragmentWebshopBinding
+import com.google.android.material.snackbar.Snackbar
+import com.klimaatmobiel.data.network.KlimaatmobielApi
 import com.klimaatmobiel.domain.Group
+import com.klimaatmobiel.domain.KlimaatmobielRepository
+import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
 import com.klimaatmobiel.ui.ViewModelFactories.WebshopViewModelFactory
 import com.klimaatmobiel.ui.adapters.OrderPreviewListAdapter
 import com.klimaatmobiel.ui.adapters.ProductListAdapter
 import com.klimaatmobiel.ui.viewModels.MainMenuViewModel
 import com.klimaatmobiel.ui.viewModels.WebshopViewModel
+import kotlinx.android.synthetic.main.fragment_webshop.*
 import timber.log.Timber
+import java.util.*
 
 /**
  * A simple [Fragment] subclass.
@@ -38,25 +48,30 @@ class WebshopFragment : Fragment() {
 
 
         val binding = FragmentWebshopBinding.inflate(inflater)
-        binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = this
 
         viewModel = activity?.run {
             ViewModelProviders.of(this)[WebshopViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
 
+
         binding.webshopViewModel = viewModel
 
-        binding.orderPreviewList.adapter = OrderPreviewListAdapter(OrderPreviewListAdapter.OnClickListener{ // add
-            viewModel.changeOrderItemAmount(it, true)
-        }, OrderPreviewListAdapter.OnClickListener{// minus
-            viewModel.changeOrderItemAmount(it, false)
-        }, OrderPreviewListAdapter.OnClickListener{// delete
-            viewModel.removeOrderItem(it)
+        val adapter = ProductListAdapter(ProductListAdapter.OnClickListener {
+            product, action ->  viewModel.onProductClicked(product, action)
         })
 
-
-        val adapter = ProductListAdapter(ProductListAdapter.OnClickListener {
-            viewModel.addProductToOrder(it)
+        viewModel.status.observe(this, Observer {
+            when(it) {
+                KlimaatMobielApiStatus.ERROR -> {
+                    Snackbar.make(
+                        activity!!.findViewById(android.R.id.content),
+                        getString(R.string.project_code_error),
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                    viewModel.onErrorShown()
+                }
+            }
         })
 
         /**
@@ -101,18 +116,37 @@ class WebshopFragment : Fragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
                 if(!s.isNullOrEmpty()){
                     // Resubmit the full list and apply the new filter
-                    adapter.addHeaderAndSubmitList(viewModel.group.value!!.project.products)
-                    adapter.filter.filter(s)
+//                    adapter.filter.filter(s)
+                    viewModel.filterList(s)
+                    adapter.addHeaderAndSubmitList(viewModel.filteredList.value)
                 } else {
                     adapter.addHeaderAndSubmitList(viewModel.group.value!!.project.products)
                 }
                 adapter.notifyDataSetChanged()
-
             }
         })
+
+        var productList = viewModel.group.value!!.project.products
+        val cats = productList.map { prod -> prod.category!!.categoryName }.toSortedSet()
+        val catList = listOf<String>("  GEEN FILTER  ") + cats.toList()
+
+        val dropAdapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, catList)
+
+
+        binding.positionSpinner.adapter = dropAdapter
+
+        binding.positionSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                val item = dropAdapter.getItem(position)
+
+            }
+        }
 
         return binding.root
     }

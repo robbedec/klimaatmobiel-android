@@ -6,19 +6,24 @@
         <variable
             name="product"
             type="com.klimaatmobiel.domain.Product" />
+        <variable
+            name="clickListener"
+            type="com.klimaatmobiel.ui.adapters.ProductListAdapter.OnClickListener" />
     </data>
 
     <androidx.cardview.widget.CardView
         style="@style/CardView.Light"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp">
+        android:layout_margin="5dp"
+        android:onClick="@{() -> clickListener.onClick(product, 1)}">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp">
+            android:layout_margin="10dp"
+            >
 
             <ImageView
                 android:id="@+id/product_image"
@@ -66,7 +71,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/product_image"
-                app:srcCompat="@drawable/cart2_red" />
+                app:srcCompat="@drawable/cart2_red"
+                android:onClick="@{() -> clickListener.onClick(product, 0)}"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

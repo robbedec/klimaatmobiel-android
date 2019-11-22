@@ -3,57 +3,47 @@ package com.klimaatmobiel.ui.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.klimaatmobiel.data.network.KlimaatmobielApi
-import com.klimaatmobiel.domain.Group
-import com.klimaatmobiel.domain.Order
-import com.klimaatmobiel.domain.OrderItem
-import com.klimaatmobiel.domain.Product
+import androidx.lifecycle.viewModelScope
+import com.klimaatmobiel.domain.*
 import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
+import kotlinx.coroutines.*
 import retrofit2.HttpException
-import retrofit2.Response
 import timber.log.Timber
 
 
 
-class WebshopViewModel(group : Group) : ViewModel() {
+class WebshopViewModel(group: Group, private val repository: KlimaatmobielRepository) : ViewModel() {
 
 
     private var _status = MutableLiveData<KlimaatMobielApiStatus>()
     val status: LiveData<KlimaatMobielApiStatus> get() = _status
 
+    var posToRefreshInOrderPreviewListItem: Int = -1
 
     private var _group = MutableLiveData<Group>()
     val group: LiveData<Group> get() = _group
 
+    private var _filteredList = MutableLiveData<List<Product>>()
+    val filteredList: LiveData<List<Product>> get() = _filteredList
 
-    private var viewModelJob = Job()
-    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+    private val _navigateToWebshop = MutableLiveData<List<Long>>()
+    val navigateToWebshop: LiveData<List<Long>> get() = _navigateToWebshop
 
 
 
     init {
         _group.value = group // de groep met het project end de order is hier beschikbaar
-
+        _filteredList.value = group.project.products
     }
 
-
-
-
+    fun onDetailNavigated() {
+        _navigateToWebshop.value = null
+    }
 
     fun addProductToOrder(product: Product){
+        viewModelScope.launch {
 
-
-        coroutineScope.launch {
-
-
-            var addProductToOrderDeferred = KlimaatmobielApi.retrofitService.
-                addProductToOrder(OrderItem(0,1,null,product.productId, 0),_group.value!!.order!!.orderId)
+            val addProductToOrderDeferred = repository.addProductToOrder(OrderItem(0,1,null,product.productId, 0),_group.value!!.order.orderId)
             try {
                 _status.value = KlimaatMobielApiStatus.LOADING
                 val orderItemRes = addProductToOrderDeferred.await()
@@ -63,9 +53,15 @@ class WebshopViewModel(group : Group) : ViewModel() {
                     _group.value!!.findOrderItemById(orderItemRes.removedOrAddedOrderItem.orderItemId)!!
                         .amount = orderItemRes.removedOrAddedOrderItem.amount
 
+                    posToRefreshInOrderPreviewListItem = _group.value!!.order.orderItems
+                        .indexOf(_group.value!!.findOrderItemById(orderItemRes.removedOrAddedOrderItem.orderItemId))
+
                 } else {
+                    posToRefreshInOrderPreviewListItem = -1
                     _group.value!!.order.orderItems.add(orderItemRes.removedOrAddedOrderItem)
                 }
+
+
 
                 _group.value!!.order.totalOrderPrice = orderItemRes.totalOrderPrice
 
@@ -78,17 +74,22 @@ class WebshopViewModel(group : Group) : ViewModel() {
                 _status.value = KlimaatMobielApiStatus.ERROR
             }
             catch (e: Exception) {
-                Timber.i(e.message)
+                Timber.i(e)
                 _status.value = KlimaatMobielApiStatus.ERROR
             }
         }
     }
 
+    fun filterList(c: CharSequence) {
+        _filteredList.value = _group.value!!.project.products.filter { product ->
+            product.productName.toLowerCase().contains(c.toString().toLowerCase())
+        }
+    }
 
     fun changeOrderItemAmount(oi: OrderItem, add: Boolean){
         if(add){
             oi.amount++
-            updateOrderItem(oi);
+            updateOrderItem(oi)
         } else {
             oi.amount--
             if(oi.amount < 1) {
@@ -102,17 +103,21 @@ class WebshopViewModel(group : Group) : ViewModel() {
 
     private fun updateOrderItem(oi: OrderItem){
 
-        coroutineScope.launch {
+        viewModelScope.launch {
 
-            var updateOrderItemDeferred = KlimaatmobielApi.retrofitService.updateOrderItem(oi, oi.orderItemId)
+            val updateOrderItemDeferred = repository.updateOrderItem(oi, oi.orderItemId)
             try {
                 _status.value = KlimaatMobielApiStatus.LOADING
                 val orderItemRes = updateOrderItemDeferred.await()
 
-
                 _group.value!!.findOrderItemById(orderItemRes.removedOrAddedOrderItem.orderItemId)!!
                     .amount = orderItemRes.removedOrAddedOrderItem.amount
                 _group.value!!.order.totalOrderPrice = orderItemRes.totalOrderPrice
+
+                posToRefreshInOrderPreviewListItem = _group.value!!.order.orderItems
+                    .indexOf(_group.value!!.findOrderItemById(orderItemRes.removedOrAddedOrderItem.orderItemId))
+
+
 
                 _group.value = _group.value // trigger live data change, moet wss niet?
 
@@ -123,7 +128,7 @@ class WebshopViewModel(group : Group) : ViewModel() {
                 _status.value = KlimaatMobielApiStatus.ERROR
             }
             catch (e: Exception) {
-                Timber.i(e.message)
+                Timber.i(e)
                 _status.value = KlimaatMobielApiStatus.ERROR
             }
         }
@@ -132,15 +137,16 @@ class WebshopViewModel(group : Group) : ViewModel() {
 
     fun removeOrderItem(oi : OrderItem){
 
-        coroutineScope.launch {
-            var removeOrderItemDeferred = KlimaatmobielApi.retrofitService.
-                removeOrderItemFromOrder(oi.orderItemId, group.value!!.order.orderId)
+        viewModelScope.launch {
+            val removeOrderItemDeferred = repository.removeOrderItemFromOrder(oi.orderItemId, group.value!!.order.orderId)
             try {
                 _status.value = KlimaatMobielApiStatus.LOADING
                 val orderItemRes = removeOrderItemDeferred.await()
 
                 _group.value!!.order.orderItems.remove( _group.value!!.findOrderItemById(orderItemRes.removedOrAddedOrderItem.orderItemId)!!)
                 _group.value!!.order.totalOrderPrice = orderItemRes.totalOrderPrice
+
+                posToRefreshInOrderPreviewListItem = -1
 
                 _group.value = _group.value // trigger live data change, moet wss niet?
 
@@ -151,11 +157,27 @@ class WebshopViewModel(group : Group) : ViewModel() {
                 _status.value = KlimaatMobielApiStatus.ERROR
             }
             catch (e: Exception) {
-                Timber.i(e.message)
                 _status.value = KlimaatMobielApiStatus.ERROR
             }
         }
     }
 
+    fun onProductClicked(product: Product, action: Int) {
+        when(action) {
+            0 -> addProductToOrder(product)
+            1 -> {
+                _navigateToWebshop.value = listOf(product.projectId, product.productId)
+                Timber.i("productid: ${product.projectId} and ${product.productId}")
+            }
+        }
+    }
 
+    fun onErrorShown() {
+        _status.value = null
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelScope.cancel()
+    }
 }

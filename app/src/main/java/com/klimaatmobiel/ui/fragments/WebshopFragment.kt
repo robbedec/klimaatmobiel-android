@@ -119,7 +119,7 @@ class WebshopFragment : Fragment() {
                 if(!s.isNullOrEmpty()){
                     // Resubmit the full list and apply the new filter
 //                    adapter.filter.filter(s)
-                    viewModel.filterList(s)
+                    viewModel.filterListString(s)
                     adapter.addHeaderAndSubmitList(viewModel.filteredList.value)
                 } else {
                     adapter.addHeaderAndSubmitList(viewModel.group.value!!.project.products)
@@ -130,7 +130,7 @@ class WebshopFragment : Fragment() {
 
         var productList = viewModel.group.value!!.project.products
         val cats = productList.map { prod -> prod.category!!.categoryName }.toSortedSet()
-        val catList = listOf<String>("  GEEN FILTER  ") + cats.toList()
+        val catList = listOf<String>("GEEN FILTER") + cats.toList()
 
         val dropAdapter = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, catList)
 
@@ -143,8 +143,13 @@ class WebshopFragment : Fragment() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                val item = dropAdapter.getItem(position)
-
+                if (position == 0) {
+                    viewModel.filterListCategoryName("")
+                    adapter.addHeaderAndSubmitList(viewModel.filteredList.value)
+                } else {
+                    viewModel.filterListCategoryName(parent.getItemAtPosition(position).toString())
+                    adapter.addHeaderAndSubmitList(viewModel.filteredList.value)
+                }
             }
         }
 

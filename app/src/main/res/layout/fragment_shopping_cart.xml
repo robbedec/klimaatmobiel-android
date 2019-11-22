@@ -36,7 +36,7 @@ tools:context="com.klimaatmobiel.ui.fragments.ShoppingCartFragment">
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            app:layout_constraintBottom_toTopOf="@+id/klimaatscore_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cart_text"
@@ -45,7 +45,7 @@ tools:context="com.klimaatmobiel.ui.fragments.ShoppingCartFragment">
             tools:listitem="@layout/order_preview_list_item" />
 
         <LinearLayout
-            android:id="@+id/linearLayout"
+            android:id="@+id/klimaatscore_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -63,9 +63,9 @@ tools:context="com.klimaatmobiel.ui.fragments.ShoppingCartFragment">
             android:textAlignment="center"
             android:textSize="18sp"
             app:groupSpentBinding="@{webshopViewModel.group.order.totalOrderPrice}"
-            app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+            app:layout_constraintBottom_toBottomOf="@+id/klimaatscore_layout"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/linearLayout"
+            app:layout_constraintTop_toTopOf="@+id/klimaatscore_layout"
             app:layout_constraintWidth_percent="0.5"
             tools:text="Totaal: €123" />
 

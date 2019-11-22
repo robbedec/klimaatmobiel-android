@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.klimaatmobiel.domain.*
 import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
+import com.squareup.moshi.Json
 import kotlinx.coroutines.*
+import org.json.JSONStringer
 import retrofit2.HttpException
 import timber.log.Timber
 
@@ -25,11 +27,13 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
 
     private var _filteredList = MutableLiveData<List<Product>>()
     val filteredList: LiveData<List<Product>> get() = _filteredList
+    private var filterString = ""
+    private var filterCategoryName = ""
 
     private val _navigateToWebshop = MutableLiveData<List<Long>>()
     val navigateToWebshop: LiveData<List<Long>> get() = _navigateToWebshop
 
-    val testScore = 10.0
+    val testScore = 7.0
 
 
 
@@ -82,9 +86,26 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
         }
     }
 
-    fun filterList(c: CharSequence) {
-        _filteredList.value = _group.value!!.project.products.filter { product ->
-            product.productName.toLowerCase().contains(c.toString().toLowerCase())
+    fun filterListString(c: CharSequence) {
+        filterString = c.toString().toLowerCase()
+        filterList()
+    }
+
+    fun filterListCategoryName(s: String) {
+        filterCategoryName = s
+        filterList()
+    }
+
+    private fun filterList() {
+        val afterStringFilter = _group.value!!.project.products.filter { product ->
+            product.productName.toLowerCase().contains(filterString)
+        }
+        if (filterCategoryName.isNotEmpty()) {
+            _filteredList.value = afterStringFilter.filter { product ->
+                product.category!!.categoryName == filterCategoryName
+            }
+        } else {
+            _filteredList.value = afterStringFilter
         }
     }
 

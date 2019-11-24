@@ -1,17 +1,20 @@
 package com.klimaatmobiel.ui
 
+import android.graphics.Color
+import android.util.TypedValue
 import android.opengl.Visibility
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.net.toUri
+import androidx.core.view.marginLeft
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.projecten3android.R
-import com.klimaatmobiel.domain.Order
 import com.klimaatmobiel.domain.OrderItem
 import com.klimaatmobiel.domain.Product
 import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
@@ -73,6 +76,47 @@ fun btnCheckoutOrderBinding(btn: Button, totalPrice: Double) {
 @BindingAdapter("orderItemTotalPriceBinding")
 fun orderItemTotalPriceBinding(txtView: TextView, oi: OrderItem) {
     txtView.text = "€" + (oi.amount * oi.product!!.price).toString()
+}
+
+@BindingAdapter("orderTotalScoreBinding")
+fun orderTotalScoreBinding(parent: LinearLayout, score: Double) {
+    parent.removeAllViews()
+
+    val lp20 = LinearLayout.LayoutParams(
+        LinearLayout.LayoutParams.WRAP_CONTENT,
+        LinearLayout.LayoutParams.WRAP_CONTENT)
+
+    lp20.setMargins(20, 0, 20, 0)
+
+    val tv = TextView(parent.context)
+    tv.text = ("Klimaatscore: ")
+    tv.setTextColor(Color.parseColor("#C3004A"))
+    tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP,40.toFloat())
+
+    parent.addView(tv)
+
+    val aantalDraws = (score/2).toInt()
+
+    for (i in 1..aantalDraws) {
+        val iv = ImageView(parent.context)
+        val lp = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT)
+
+        lp.setMargins(8, 0, 8, 0)
+
+        iv.setBackgroundResource(R.drawable.score_bloem)
+
+        parent.addView(iv, lp)
+    }
+
+    for (i in 1..(5-aantalDraws)) {
+        val iv = ImageView(parent.context)
+
+        iv.setBackgroundResource(R.drawable.score_dot)
+
+        parent.addView(iv, lp20)
+    }
 }
 
 /**

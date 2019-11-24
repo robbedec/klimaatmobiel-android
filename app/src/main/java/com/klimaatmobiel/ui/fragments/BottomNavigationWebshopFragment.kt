@@ -51,7 +51,10 @@ class BottomNavigationWebshopFragment : Fragment() {
             (activity as MainActivity).triggerWebshopBottomNavigation(it)
             true
         })
-        binding.bottomNavigationWebshop.selectedItemId = R.id.nav_webshop
+        if(savedInstanceState == null){
+            binding.bottomNavigationWebshop.selectedItemId = R.id.nav_webshop
+        }
+
 
         // Navigate to the product detail fragment
         viewModel.navigateToWebshop.observe(this, Observer {

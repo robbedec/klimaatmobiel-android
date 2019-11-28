@@ -16,12 +16,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        //setContentView(R.layout.activity_main)
     }
 
+    /**
+     * Set the toolbar title from the current activity.
+     *
+     * @param titleString The title you want to set.
+     */
     fun setToolbarTitle(titleString : String){
         supportActionBar!!.title = titleString
     }
@@ -31,6 +33,11 @@ class MainActivity : AppCompatActivity() {
         return super.onSupportNavigateUp()
     }
 
+    /**
+     * Handle clicks on the bottomNavigation
+     *
+     * @param menuItem The navigation item that is clicked.
+     */
     fun triggerWebshopBottomNavigation(menuItem : MenuItem) {
         var fragment : Fragment = WebshopFragment()
         when(menuItem.itemId){

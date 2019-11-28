@@ -35,23 +35,16 @@ interface KlimaatmobielApiService {
 
 
     @GET("group/project/{groupCode}")
-    fun getFullGroup(@Path("groupCode") groupCode: String):
-            Deferred<Group>
-
-    @GET("project/{projectCode}/products/{productCode}")
-    fun getProduct(@Path("projectCode") projectCode: Long, @Path("productCode") productCode: Long): Deferred<Product>
-
+    fun getFullGroupAsync(@Path("groupCode") groupCode: String): Deferred<Group>
 
     @PUT("order/addOrderItem/{orderId}" )
-    fun addProductToOrder(@Body dto : OrderItem, @Path("orderId") orderId : Long) : Deferred<RemoveOrAddedOrderItemDTO>
-
+    fun addProductToOrderAsync(@Body dto : OrderItem, @Path("orderId") orderId : Long) : Deferred<RemoveOrAddedOrderItemDTO>
 
     @PUT("order/removeOrderItem/{orderItemId}/{orderId}" )
-    fun removeOrderItemFromOrder(@Path("orderItemId") orderItemId : Long, @Path("orderId") orderId : Long) : Deferred<RemoveOrAddedOrderItemDTO>
-
+    fun removeOrderItemFromOrderAsync(@Path("orderItemId") orderItemId : Long, @Path("orderId") orderId : Long) : Deferred<RemoveOrAddedOrderItemDTO>
 
     @PUT("orderItem/{orderItemId}" )
-    fun updateOrderItem(@Body dto : OrderItem, @Path("orderItemId") orderItemId : Long) : Deferred<RemoveOrAddedOrderItemDTO>
+    fun updateOrderItemAsync(@Body dto : OrderItem, @Path("orderItemId") orderItemId : Long) : Deferred<RemoveOrAddedOrderItemDTO>
 
 
 }

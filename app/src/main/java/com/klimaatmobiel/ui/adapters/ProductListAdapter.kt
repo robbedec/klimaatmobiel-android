@@ -103,7 +103,6 @@ class ProductListAdapter(private val onClickListener: OnClickListener) : ListAda
         adapterScore.launch {
 
             val sList: MutableList<DataItem> = ArrayList()
-            if(list!!.isNotEmpty()) {
                 var cat = list!![0].category!!.categoryName
                 sList.add(DataItem.Header(cat))
 
@@ -116,7 +115,6 @@ class ProductListAdapter(private val onClickListener: OnClickListener) : ListAda
                         sList.add(DataItem.ProductItem(it))
                     }
                 }
-            }
             withContext(Dispatchers.Main) {
                 submitList(sList)
                 notifyDataSetChanged()

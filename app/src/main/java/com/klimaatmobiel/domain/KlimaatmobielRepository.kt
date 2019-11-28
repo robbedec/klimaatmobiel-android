@@ -10,20 +10,20 @@ import kotlinx.coroutines.withContext
 
 class KlimaatmobielRepository(private val apiService: KlimaatmobielApiService, private val database: ProductsDatabase) {
 
-    fun getFullGroup(groupCode: String): Deferred<Group> {
-        return apiService.getFullGroup(groupCode)
+    suspend fun getFullGroup(groupCode: String): Group {
+        return apiService.getFullGroupAsync(groupCode).await()
     }
 
-    fun addProductToOrder(orderItem: OrderItem, orderId: Long): Deferred<RemoveOrAddedOrderItemDTO> {
-        return apiService.addProductToOrder(orderItem, orderId)
+    suspend fun addProductToOrder(orderItem: OrderItem, orderId: Long): RemoveOrAddedOrderItemDTO {
+        return apiService.addProductToOrderAsync(orderItem, orderId).await()
     }
 
-    fun updateOrderItem(orderItem: OrderItem, orderId: Long): Deferred<RemoveOrAddedOrderItemDTO> {
-        return apiService.updateOrderItem(orderItem, orderId)
+    suspend fun updateOrderItem(orderItem: OrderItem, orderId: Long): RemoveOrAddedOrderItemDTO {
+        return apiService.updateOrderItemAsync(orderItem, orderId).await()
     }
 
-    fun removeOrderItemFromOrder(orderItemId: Long, orderId: Long): Deferred<RemoveOrAddedOrderItemDTO> {
-        return apiService.removeOrderItemFromOrder(orderItemId, orderId)
+    suspend fun removeOrderItemFromOrder(orderItemId: Long, orderId: Long): RemoveOrAddedOrderItemDTO {
+        return apiService.removeOrderItemFromOrderAsync(orderItemId, orderId).await()
     }
 
     suspend fun getProduct(projectId: Long, productId: Long) : Product {

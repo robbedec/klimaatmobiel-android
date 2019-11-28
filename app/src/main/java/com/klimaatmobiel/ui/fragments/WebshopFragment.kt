@@ -80,13 +80,13 @@ class WebshopFragment : Fragment() {
          * itemViewType = 0 -> HEADER
          * itemViewType = 1 -> PRODUCT
          */
-        val manager = GridLayoutManager(context, 2)
+        val manager = GridLayoutManager(context, 3)
         manager.spanSizeLookup = object: GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 return if(adapter.getItemViewType(position) == 1) {
                     1
                 } else {
-                    2
+                    3
                 }
             }
 

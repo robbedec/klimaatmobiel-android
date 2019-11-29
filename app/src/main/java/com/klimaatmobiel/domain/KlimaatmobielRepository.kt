@@ -42,6 +42,7 @@ class KlimaatmobielRepository(private val apiService: KlimaatmobielApiService, p
     }
 
     /**
+     * Remove a [Product] from the [Order] of the current [Group].
      *
      * @param orderItemId the unique identifier of the product that will be removed from the [Order].
      * @param orderId the unique identifier of the [Order] that will update.

@@ -27,6 +27,16 @@ git clone git@github.com:HoGent-Projecten3/projecten3-1920-android-klim03.git
 
 Open the project in Android Studio and build
 
+## Using the application
+### Log in
+
+There is a project / group provided for teting purposes. To gain access to the application enter the following code in the textfield.
+
+```
+212345
+```
+
+
 ## Running tests
 
 Open the root directory of the project in a terminal and run
@@ -34,6 +44,8 @@ Open the root directory of the project in a terminal and run
 ```
 ./gradlew connectedAndroidTest
 ```
+
+Or run the gradle task in Android Studio.
 
 ## Built with
 
@@ -47,7 +59,3 @@ Open the root directory of the project in a terminal and run
 
 * **Daan Dedecker**
 * **Robbe Decorte**
-* **Florian Landuyt**
-* **Keelan Savat**
-* **Thomas Schuddinck**
-* **Sofie Seru**

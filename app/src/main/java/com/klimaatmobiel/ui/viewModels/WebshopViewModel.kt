@@ -9,7 +9,7 @@ import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
 import kotlinx.coroutines.*
 import retrofit2.HttpException
 import timber.log.Timber
-
+import java.util.*
 
 
 class WebshopViewModel(group: Group, private val repository: KlimaatmobielRepository) : ViewModel() {
@@ -78,11 +78,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
 
                 _status.value = KlimaatMobielApiStatus.DONE
 
-            }catch (e: HttpException) {
-                Timber.i(e.message())
-                _status.value = KlimaatMobielApiStatus.ERROR
-            }
-            catch (e: Exception) {
+            } catch (e: Exception) {
                 Timber.i(e)
                 _status.value = KlimaatMobielApiStatus.ERROR
             }
@@ -95,7 +91,11 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
      * @param c [CharSequence] to filter the products with.
      */
     fun filterListString(c: CharSequence) {
-        filterString = c.toString().toLowerCase()
+        if(c.isNotEmpty() && c.isNotBlank()) {
+            filterString = c.toString().toLowerCase(Locale.getDefault())
+        } else {
+            filterString = ""
+        }
         filterList()
     }
 
@@ -114,7 +114,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
      */
     private fun filterList() {
         val afterStringFilter = _group.value!!.project.products.filter { product ->
-            product.productName.toLowerCase().contains(filterString)
+            product.productName.toLowerCase(Locale.getDefault()).contains(filterString)
         }
         if (filterCategoryName.isNotEmpty()) {
             _filteredList.value = afterStringFilter.filter { product ->

@@ -60,13 +60,13 @@ class WebshopFragment : Fragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if(!s.isNullOrEmpty()){
+                if(s != null){
                     // Resubmit the full list and apply the new filter
 //                    adapter.filter.filter(s)
                     viewModel.filterListString(s)
                     adapter.addHeaderAndSubmitList(viewModel.filteredList.value)
                 } else {
-                    adapter.addHeaderAndSubmitList(viewModel.group.value!!.project.products)
+                    adapter.addHeaderAndSubmitList(viewModel.filteredList.value)
                 }
                 adapter.notifyDataSetChanged()
             }
@@ -102,7 +102,7 @@ class WebshopFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-
+        //adapter.addHeaderAndSubmitList(viewModel.filteredList.value)
         viewModel.status.observe(this, Observer {
             when(it) {
                 KlimaatMobielApiStatus.ERROR -> {

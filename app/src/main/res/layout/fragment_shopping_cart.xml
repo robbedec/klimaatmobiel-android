@@ -51,33 +51,36 @@ tools:context="com.klimaatmobiel.ui.fragments.ShoppingCartFragment">
             android:layout_marginBottom="16dp"
             android:gravity="center"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/complete_order_button"
             app:layout_constraintStart_toStartOf="parent"
-            app:orderTotalScoreBinding="@{webshopViewModel.testScore}" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/complete_order_button"
+            app:orderTotalScoreBinding="@{webshopViewModel.group.order.avgScore}" />
 
         <TextView
             android:id="@+id/order_cost"
-            android:layout_width="206dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:layout_marginBottom="8dp"
             android:textAlignment="center"
-            android:textSize="18sp"
+            android:textColor="@color/colorBlack"
+            android:textSize="24sp"
             app:groupSpentBinding="@{webshopViewModel.group.order.totalOrderPrice}"
-            app:layout_constraintBottom_toBottomOf="@+id/klimaatscore_layout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/klimaatscore_layout"
-            app:layout_constraintWidth_percent="0.5"
+            app:layout_constraintBottom_toTopOf="@+id/klimaatscore_layout"
+            app:layout_constraintStart_toStartOf="@id/klimaatscore_layout"
             tools:text="Totaal: €123" />
 
         <Button
             android:id="@+id/complete_order_button"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            style="@style/klim_button"
+            app:layout_constraintWidth_percent="0.5"
             app:btnCheckoutOrderBinding="@{webshopViewModel.group.order.totalOrderPrice}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toEndOf="@id/klimaatscore_layout"
+            app:layout_constraintTop_toTopOf="@id/order_cost" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

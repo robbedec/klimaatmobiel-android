@@ -88,7 +88,7 @@ fun orderTotalScoreBinding(parent: LinearLayout, score: Double) {
         LinearLayout.LayoutParams.WRAP_CONTENT,
         LinearLayout.LayoutParams.WRAP_CONTENT)
 
-    lp20.setMargins(20, 0, 20, 0)
+    lp20.setMargins(8, 0, 8, 8)
 
     val tv = TextView(parent.context)
     tv.text = ("Klimaatscore: ")

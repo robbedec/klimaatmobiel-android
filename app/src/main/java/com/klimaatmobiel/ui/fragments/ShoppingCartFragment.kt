@@ -1,7 +1,5 @@
 package com.klimaatmobiel.ui.fragments
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,29 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-
-import com.example.projecten3android.R
 import com.example.projecten3android.databinding.FragmentShoppingCartBinding
-import com.example.projecten3android.databinding.FragmentWebshopBinding
 import com.klimaatmobiel.ui.adapters.OrderPreviewListAdapter
-import com.klimaatmobiel.ui.adapters.ProductListAdapter
 import com.klimaatmobiel.ui.viewModels.WebshopViewModel
-import timber.log.Timber
-
 
 class ShoppingCartFragment : Fragment() {
 
-
     private lateinit var viewModel: WebshopViewModel
+    private lateinit var binding: FragmentShoppingCartBinding
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-
-        val binding = FragmentShoppingCartBinding.inflate(inflater)
-        binding.setLifecycleOwner(this)
+        binding = FragmentShoppingCartBinding.inflate(inflater)
+        binding.lifecycleOwner = this
 
         viewModel = activity?.run {
             ViewModelProviders.of(this)[WebshopViewModel::class.java]
@@ -39,6 +27,7 @@ class ShoppingCartFragment : Fragment() {
 
         binding.webshopViewModel = viewModel
 
+        // Bind the clickListener for shopping cart actions
         binding.orderPreviewList.adapter = OrderPreviewListAdapter(OrderPreviewListAdapter.OnClickListener{ // add
             viewModel.changeOrderItemAmount(it, true)
         }, OrderPreviewListAdapter.OnClickListener{// minus
@@ -47,16 +36,23 @@ class ShoppingCartFragment : Fragment() {
             viewModel.removeOrderItem(it)
         })
 
+        return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+
         viewModel.group.observe(this, Observer{
             if(viewModel.posToRefreshInOrderPreviewListItem != -1){
                 binding.orderPreviewList.adapter?.notifyItemChanged(viewModel.posToRefreshInOrderPreviewListItem)
             }
         })
-
-        return binding.root
-
-
     }
 
+    override fun onPause() {
+        super.onPause()
 
+        // Deallocate observers
+        viewModel.group.removeObservers(this)
+    }
 }

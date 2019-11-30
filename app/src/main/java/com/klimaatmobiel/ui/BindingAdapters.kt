@@ -26,8 +26,6 @@ import timber.log.Timber
 @BindingAdapter("listDataProducts")
 fun listDataProductsBinding(recyclerView: RecyclerView, data: List<Product>) {
     val adapter = recyclerView.adapter as ProductListAdapter
-
-    //adapter.convertAndSubmit(data)
 }
 @BindingAdapter("listDataOrderPreview")
 fun listDataOrderPreviewBinding(recyclerView: RecyclerView, data: List<OrderItem>?) {
@@ -52,9 +50,7 @@ fun productNameBinding(txtView: TextView, name: String?) {
 
 @BindingAdapter("productNameAndCategoryBinding")
 fun productNameAndCategoryBinding(txtView: TextView, product: Product?) {
-   // Timber.i("${product.productName} (${product.category?.categoryName})")
     if(product != null) txtView.text = "${product.productName} (${product.category?.categoryName})"
-
 }
 
 @BindingAdapter("productPriceBinding")
@@ -78,6 +74,12 @@ fun orderItemTotalPriceBinding(txtView: TextView, oi: OrderItem) {
     txtView.text = "€" + (oi.amount * oi.product!!.price).toString()
 }
 
+/**
+ * Show the appropriate amount of flowers and dots to visualize the climate score of the project.
+ *
+ * @param parent The [LinearLayout] that holds the climate score.
+ * @param score The score of the project.
+ */
 @BindingAdapter("orderTotalScoreBinding")
 fun orderTotalScoreBinding(parent: LinearLayout, score: Double) {
     parent.removeAllViews()
@@ -86,7 +88,7 @@ fun orderTotalScoreBinding(parent: LinearLayout, score: Double) {
         LinearLayout.LayoutParams.WRAP_CONTENT,
         LinearLayout.LayoutParams.WRAP_CONTENT)
 
-    lp20.setMargins(20, 0, 20, 0)
+    lp20.setMargins(8, 0, 8, 8)
 
     val tv = TextView(parent.context)
     tv.text = ("Klimaatscore: ")
@@ -128,8 +130,11 @@ fun categoryNameBinding(txtView: TextView, name: String) {
 }
 
 /**
- * Convert imgUrl to a URI with the https scheme
- * Use Glide to download the image display it in imgView
+ * Convert imgUrl to a URI with the https scheme.
+ * Use Glide to download the image display it in imgView or show a default image if the action fails.
+ *
+ * @param imgView The [ImageView] that will hold the image.
+ * @param imgUrl The url of the image that should be displayed.
  */
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {
@@ -145,6 +150,12 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
     }
 }
 
+/**
+ * Show a spinner based on the API status.
+ *
+ * @param statusImageView The [ImageView] that will hold the animation.
+ * @param status The curren [KlimaatMobielApiStatus].
+ */
 @BindingAdapter("apiStatus")
 fun bindStatus(statusImageView: ImageView, status: KlimaatMobielApiStatus?) {
     if(status != null) {
@@ -153,9 +164,8 @@ fun bindStatus(statusImageView: ImageView, status: KlimaatMobielApiStatus?) {
                 statusImageView.visibility = View.VISIBLE
                 statusImageView.setImageResource(R.drawable.loading_animation)
             }
-            KlimaatMobielApiStatus.DONE -> {
-                statusImageView.visibility = View.GONE
-            }
+            KlimaatMobielApiStatus.DONE -> statusImageView.visibility = View.GONE
+            KlimaatMobielApiStatus.ERROR -> statusImageView.visibility = View.GONE
         }
     }
 }

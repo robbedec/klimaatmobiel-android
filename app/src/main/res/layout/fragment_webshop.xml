@@ -26,6 +26,7 @@
             android:inputType="textPersonName"
             app:layout_constraintBottom_toTopOf="@id/products_list"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/positionSpinner"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Spinner

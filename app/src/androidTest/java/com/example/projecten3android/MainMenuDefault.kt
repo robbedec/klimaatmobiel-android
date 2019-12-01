@@ -62,7 +62,7 @@ class MainMenuDefault {
         onView(withId(R.id.webshop_button)).perform(click())
 
         // Wait while the shop is loading
-        SystemClock.sleep(3000)
+        SystemClock.sleep(2000)
 
         onView(withId(R.id.products_list)).check(matches(isDisplayed()))
     }

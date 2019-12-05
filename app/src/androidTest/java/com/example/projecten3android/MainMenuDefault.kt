@@ -50,7 +50,7 @@ class MainMenuDefault {
         onView(withId(R.id.webshop_button)).perform(click())
 
         // Wait for the api to return an error.
-        SystemClock.sleep(3000)
+        SystemClock.sleep(2000)
 
         onView(withId(com.google.android.material.R.id.snackbar_text))
             .check(matches(withText(R.string.project_code_error)))
@@ -65,6 +65,5 @@ class MainMenuDefault {
         SystemClock.sleep(2000)
 
         onView(withId(R.id.products_list)).check(matches(isDisplayed()))
-        //onView(withId(R.id.constraintLayout_order)).check(matches(isDisplayed()))
     }
 }

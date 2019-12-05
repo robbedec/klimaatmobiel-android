@@ -16,7 +16,7 @@ import retrofit2.http.*
 
 // launch backend as http -- line 39 properties "applicationUrl": "http://localhost:5000"
 //private const val BASE_URL = "http://10.0.2.2:5000/api/"
-private const val BASE_URL = "https://klimaatmobiel.daandedecker.com/api/"
+private const val BASE_URL = "https://klimapi.daandedecker.com/api/"
 
 
 private val moshi = Moshi.Builder()
@@ -35,23 +35,16 @@ interface KlimaatmobielApiService {
 
 
     @GET("group/project/{groupCode}")
-    fun getFullGroup(@Path("groupCode") groupCode: String):
-            Deferred<Group>
-
-    @GET("project/{projectCode}/products/{productCode}")
-    fun getProduct(@Path("projectCode") projectCode: Long, @Path("productCode") productCode: Long): Deferred<Product>
-
+    fun getFullGroupAsync(@Path("groupCode") groupCode: String): Deferred<Group>
 
     @PUT("order/addOrderItem/{orderId}" )
-    fun addProductToOrder(@Body dto : OrderItem, @Path("orderId") orderId : Long) : Deferred<RemoveOrAddedOrderItemDTO>
-
+    fun addProductToOrderAsync(@Body dto : OrderItem, @Path("orderId") orderId : Long) : Deferred<RemoveOrAddedOrderItemDTO>
 
     @PUT("order/removeOrderItem/{orderItemId}/{orderId}" )
-    fun removeOrderItemFromOrder(@Path("orderItemId") orderItemId : Long, @Path("orderId") orderId : Long) : Deferred<RemoveOrAddedOrderItemDTO>
-
+    fun removeOrderItemFromOrderAsync(@Path("orderItemId") orderItemId : Long, @Path("orderId") orderId : Long) : Deferred<RemoveOrAddedOrderItemDTO>
 
     @PUT("orderItem/{orderItemId}" )
-    fun updateOrderItem(@Body dto : OrderItem, @Path("orderItemId") orderItemId : Long) : Deferred<RemoveOrAddedOrderItemDTO>
+    fun updateOrderItemAsync(@Body dto : OrderItem, @Path("orderItemId") orderItemId : Long) : Deferred<RemoveOrAddedOrderItemDTO>
 
 
 }

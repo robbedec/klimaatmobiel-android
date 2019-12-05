@@ -22,6 +22,7 @@ class ProductDetailViewModel(private val repository: KlimaatmobielRepository, pr
 
     private fun loadProduct() {
         viewModelScope.launch {
+            // Get the cached product from the database
             _product.value = repository.getProduct(projectId, productId)
         }
     }

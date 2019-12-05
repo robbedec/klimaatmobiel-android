@@ -37,13 +37,15 @@
 
         <EditText
             android:id="@+id/project_code_text"
-            android:layout_width="300sp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:textSize="24sp"
             android:hint="@string/edit_text_hint"
             android:inputType="textPersonName"
             android:text="@={mainMenuViewModel.groupCode}"
             app:layout_constraintBottom_toTopOf="@+id/webshop_button"
+            app:layout_constraintWidth_percent="0.4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/klimaatmobiel_image"
@@ -51,12 +53,12 @@
 
         <Button
             android:id="@+id/webshop_button"
-            android:layout_width="300sp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
             android:onClick="@{() -> mainMenuViewModel.onClickNavigateToWebshop()}"
             android:text="@string/webshop_button_text"
-            android:textColor="@color/white"
+            style="@style/klim_button"
+            app:layout_constraintWidth_percent="0.4"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

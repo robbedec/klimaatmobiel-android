@@ -37,21 +37,35 @@ class BottomNavigationWebshopFragment : Fragment() {
 
         val group = BottomNavigationWebshopFragmentArgs.fromBundle(arguments!!).group
 
+        // Display groupName in the toolbar and show back button
         (activity as MainActivity).setToolbarTitle("Klimaatmobiel" + " - " + group.groupName + " - " + group.project.projectName)
         (activity as MainActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         val apiService = KlimaatmobielApi.retrofitService
 
+        // Create and bind the correct viewModel
         viewModel = activity?.run {
             ViewModelProviders.of(this, WebshopViewModelFactory(group, KlimaatmobielRepository(apiService, getDatabase(context!!.applicationContext))))[WebshopViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
         binding.viewModel = viewModel
 
+        // Trigger to display the webshopFragment in the placeholder from the bottomNavigation
         binding.bottomNavigationWebshop.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener {
             (activity as MainActivity).triggerWebshopBottomNavigation(it)
             true
         })
-        binding.bottomNavigationWebshop.selectedItemId = R.id.nav_webshop
+
+        // Don't trigger the webShopFragment if the bottomNavigation has a saved state
+        // Use the last selected item instead
+        if(savedInstanceState == null){
+            binding.bottomNavigationWebshop.selectedItemId = R.id.nav_webshop
+        }
+
+        return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
 
         // Navigate to the product detail fragment
         viewModel.navigateToWebshop.observe(this, Observer {
@@ -65,8 +79,12 @@ class BottomNavigationWebshopFragment : Fragment() {
                 viewModel.onDetailNavigated()
             }
         })
-
-        return binding.root
     }
 
+    override fun onPause() {
+        super.onPause()
+
+        // Deallocate observers when the fragment is not displayed on screen
+        viewModel.navigateToWebshop.removeObservers(this)
+    }
 }

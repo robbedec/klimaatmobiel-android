@@ -15,7 +15,5 @@ class PusherApplication : Application() {
 
     companion object {
         lateinit var appContext: PusherApplication
-            private set
     }
-
 }

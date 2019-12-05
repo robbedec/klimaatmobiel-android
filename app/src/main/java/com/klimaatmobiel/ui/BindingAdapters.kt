@@ -1,17 +1,20 @@
 package com.klimaatmobiel.ui
 
+import android.graphics.Color
+import android.util.TypedValue
 import android.opengl.Visibility
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.net.toUri
+import androidx.core.view.marginLeft
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.projecten3android.R
-import com.klimaatmobiel.domain.Order
 import com.klimaatmobiel.domain.OrderItem
 import com.klimaatmobiel.domain.Product
 import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
@@ -23,8 +26,6 @@ import timber.log.Timber
 @BindingAdapter("listDataProducts")
 fun listDataProductsBinding(recyclerView: RecyclerView, data: List<Product>) {
     val adapter = recyclerView.adapter as ProductListAdapter
-
-    //adapter.convertAndSubmit(data)
 }
 @BindingAdapter("listDataOrderPreview")
 fun listDataOrderPreviewBinding(recyclerView: RecyclerView, data: List<OrderItem>?) {
@@ -49,9 +50,7 @@ fun productNameBinding(txtView: TextView, name: String?) {
 
 @BindingAdapter("productNameAndCategoryBinding")
 fun productNameAndCategoryBinding(txtView: TextView, product: Product?) {
-   // Timber.i("${product.productName} (${product.category?.categoryName})")
     if(product != null) txtView.text = "${product.productName} (${product.category?.categoryName})"
-
 }
 
 @BindingAdapter("productPriceBinding")
@@ -76,6 +75,53 @@ fun orderItemTotalPriceBinding(txtView: TextView, oi: OrderItem) {
 }
 
 /**
+ * Show the appropriate amount of flowers and dots to visualize the climate score of the project.
+ *
+ * @param parent The [LinearLayout] that holds the climate score.
+ * @param score The score of the project.
+ */
+@BindingAdapter("orderTotalScoreBinding")
+fun orderTotalScoreBinding(parent: LinearLayout, score: Double) {
+    parent.removeAllViews()
+
+    val lp20 = LinearLayout.LayoutParams(
+        LinearLayout.LayoutParams.WRAP_CONTENT,
+        LinearLayout.LayoutParams.WRAP_CONTENT)
+
+    lp20.setMargins(8, 0, 8, 8)
+
+    val tv = TextView(parent.context)
+    tv.text = ("Klimaatscore: ")
+    tv.setTextColor(Color.parseColor("#C3004A"))
+    tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP,40.toFloat())
+
+    parent.addView(tv)
+
+    val aantalDraws = (score/2).toInt()
+
+    for (i in 1..aantalDraws) {
+        val iv = ImageView(parent.context)
+        val lp = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT)
+
+        lp.setMargins(8, 0, 8, 0)
+
+        iv.setBackgroundResource(R.drawable.score_bloem)
+
+        parent.addView(iv, lp)
+    }
+
+    for (i in 1..(5-aantalDraws)) {
+        val iv = ImageView(parent.context)
+
+        iv.setBackgroundResource(R.drawable.score_dot)
+
+        parent.addView(iv, lp20)
+    }
+}
+
+/**
  * Bind the categoryName to the [TextView]
  */
 @BindingAdapter("categorieNameBinding")
@@ -84,8 +130,11 @@ fun categoryNameBinding(txtView: TextView, name: String) {
 }
 
 /**
- * Convert imgUrl to a URI with the https scheme
- * Use Glide to download the image display it in imgView
+ * Convert imgUrl to a URI with the https scheme.
+ * Use Glide to download the image display it in imgView or show a default image if the action fails.
+ *
+ * @param imgView The [ImageView] that will hold the image.
+ * @param imgUrl The url of the image that should be displayed.
  */
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, imgUrl: String?) {
@@ -101,6 +150,12 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
     }
 }
 
+/**
+ * Show a spinner based on the API status.
+ *
+ * @param statusImageView The [ImageView] that will hold the animation.
+ * @param status The curren [KlimaatMobielApiStatus].
+ */
 @BindingAdapter("apiStatus")
 fun bindStatus(statusImageView: ImageView, status: KlimaatMobielApiStatus?) {
     if(status != null) {
@@ -109,9 +164,8 @@ fun bindStatus(statusImageView: ImageView, status: KlimaatMobielApiStatus?) {
                 statusImageView.visibility = View.VISIBLE
                 statusImageView.setImageResource(R.drawable.loading_animation)
             }
-            KlimaatMobielApiStatus.DONE -> {
-                statusImageView.visibility = View.GONE
-            }
+            KlimaatMobielApiStatus.DONE -> statusImageView.visibility = View.GONE
+            KlimaatMobielApiStatus.ERROR -> statusImageView.visibility = View.GONE
         }
     }
 }

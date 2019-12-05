@@ -10,11 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.projecten3android.databinding.GridListHeaderBinding
 import com.example.projecten3android.databinding.GridListItemBinding
 import com.klimaatmobiel.domain.Product
-import kotlinx.android.synthetic.main.grid_list_item.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Used to tell the [RecyclerView] which items it can reuse to load new data in
@@ -32,12 +33,12 @@ class ProductListAdapter(private val onClickListener: OnClickListener) : ListAda
     override fun getFilter(): Filter {
         return object: Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
-                var filtered: MutableList<DataItem> = ArrayList()
-                var result = FilterResults()
+                val filtered: MutableList<DataItem> = ArrayList()
+                val result = FilterResults()
 
 
                 for (x in 0 until itemCount) {
-                    if (getItemViewType(x) == 1 && getItem(x).productName.toLowerCase().contains(constraint.toString().toLowerCase())) {
+                    if (getItemViewType(x) == 1 && getItem(x).productName.toLowerCase(Locale.getDefault()).contains(constraint.toString().toLowerCase(Locale.getDefault()))) {
                         filtered.add(getItem(x))
                     }
                 }
@@ -101,21 +102,21 @@ class ProductListAdapter(private val onClickListener: OnClickListener) : ListAda
      */
     fun addHeaderAndSubmitList(list: List<Product>?) {
         adapterScore.launch {
-
             val sList: MutableList<DataItem> = ArrayList()
-            var cat = list!![0].category!!.categoryName
-            sList.add(DataItem.Header(cat))
+            if(!list.isNullOrEmpty()) {
+                var cat = list!![0].category!!.categoryName
+                sList.add(DataItem.Header(cat))
 
-            list!!.forEach {
-                if(it.category!!.categoryName == cat) {
-                    sList.add(DataItem.ProductItem(it))
-                } else {
-                    cat = it.category.categoryName
-                    sList.add(DataItem.Header(cat))
-                    sList.add(DataItem.ProductItem(it))
+                list.forEach {
+                    if (it.category!!.categoryName == cat) {
+                        sList.add(DataItem.ProductItem(it))
+                    } else {
+                        cat = it.category.categoryName
+                        sList.add(DataItem.Header(cat))
+                        sList.add(DataItem.ProductItem(it))
+                    }
                 }
             }
-
             withContext(Dispatchers.Main) {
                 submitList(sList)
                 notifyDataSetChanged()

@@ -5,7 +5,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 class Order(val orderId : Long, val time : String, val submitted : Boolean,
-            val approved : Boolean, var totalOrderPrice: Double, val avgScore: Double, val groupId : Long, var orderItems : MutableList<OrderItem>) : Parcelable {
+            val approved : Boolean, var totalOrderPrice: Double, var avgScore: Double, val groupId : Long, var orderItems : MutableList<OrderItem>) : Parcelable {
 
 
 }

@@ -74,6 +74,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
                 }
 
                 _group.value!!.order.totalOrderPrice = orderItemRes.totalOrderPrice
+                _group.value!!.order.avgScore = orderItemRes.avgScore
                 _group.value = _group.value // trigger live data change, moet wss niet?
 
                 _status.value = KlimaatMobielApiStatus.DONE
@@ -161,6 +162,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
                 _group.value!!.findOrderItemById(orderItemRes.removedOrAddedOrderItem.orderItemId)!!
                     .amount = orderItemRes.removedOrAddedOrderItem.amount
                 _group.value!!.order.totalOrderPrice = orderItemRes.totalOrderPrice
+                _group.value!!.order.avgScore = orderItemRes.avgScore
 
                 posToRefreshInOrderPreviewListItem = _group.value!!.order.orderItems
                     .indexOf(_group.value!!.findOrderItemById(orderItemRes.removedOrAddedOrderItem.orderItemId))
@@ -197,6 +199,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
 
                 _group.value!!.order.orderItems.remove( _group.value!!.findOrderItemById(orderItemRes.removedOrAddedOrderItem.orderItemId)!!)
                 _group.value!!.order.totalOrderPrice = orderItemRes.totalOrderPrice
+                _group.value!!.order.avgScore = orderItemRes.avgScore
 
                 posToRefreshInOrderPreviewListItem = -1
 

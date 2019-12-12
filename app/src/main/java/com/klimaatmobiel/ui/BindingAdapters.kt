@@ -107,7 +107,12 @@ fun orderTotalScoreBinding(parent: LinearLayout, score: Double) {
 
         lp.setMargins(8, 0, 8, 0)
 
-        iv.setBackgroundResource(R.drawable.score_bloem)
+        if(i < 4) {
+            iv.setBackgroundResource(R.drawable.score_bloem)
+        } else {
+            iv.setBackgroundResource(R.drawable.score_bloem_groen)
+        }
+
 
         parent.addView(iv, lp)
     }

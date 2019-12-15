@@ -41,7 +41,7 @@ class MainMenuViewModel(private val repository: KlimaatmobielRepository) : ViewM
             // Update the API status accordingly
 
             try {
-                var group = repository.getFullGroup(groupCode.value ?: "")
+                val group = repository.getFullGroup(groupCode.value ?: "")
                 _status.value = KlimaatMobielApiStatus.LOADING
 
                 // Filter list by categoryName
@@ -66,6 +66,7 @@ class MainMenuViewModel(private val repository: KlimaatmobielRepository) : ViewM
         }
     }
 
+    @ExperimentalCoroutinesApi
     override fun onCleared() {
         super.onCleared()
         viewModelScope.cancel()

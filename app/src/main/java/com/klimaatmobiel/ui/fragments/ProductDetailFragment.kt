@@ -13,7 +13,7 @@ import com.klimaatmobiel.data.database.getDatabase
 import com.klimaatmobiel.data.network.KlimaatmobielApi
 import com.klimaatmobiel.domain.KlimaatmobielRepository
 import com.klimaatmobiel.ui.MainActivity
-import com.klimaatmobiel.ui.ViewModelFactories.ProductDetailViewModelFactory
+import com.klimaatmobiel.ui.viewModelFactories.ProductDetailViewModelFactory
 import com.klimaatmobiel.ui.viewModels.ProductDetailViewModel
 
 /**

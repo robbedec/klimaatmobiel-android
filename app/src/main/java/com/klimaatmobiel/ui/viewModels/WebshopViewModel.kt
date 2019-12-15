@@ -88,10 +88,10 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
      * @param c [CharSequence] to filter the products with.
      */
     fun filterListString(c: CharSequence) {
-        if(c.isNotEmpty() && c.isNotBlank()) {
-            filterString = c.toString().toLowerCase(Locale.getDefault())
+        filterString = if(c.isNotEmpty() && c.isNotBlank()) {
+            c.toString().toLowerCase(Locale.getDefault())
         } else {
-            filterString = ""
+            ""
         }
         filterList()
     }
@@ -123,7 +123,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
     }
 
     /**
-     * Handle updates that are triggered in the [ShoppingCartFragment].
+     * Handle updates that are triggered in the shoppingCartFragment.
      * Completely removes the item if the amount equals 0.
      *
      * @param oi The [OrderItem] that changes.
@@ -233,6 +233,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
         _status.value = null
     }
 
+    @ExperimentalCoroutinesApi
     override fun onCleared() {
         super.onCleared()
         viewModelScope.cancel()

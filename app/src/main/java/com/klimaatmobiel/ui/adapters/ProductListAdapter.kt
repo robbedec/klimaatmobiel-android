@@ -104,7 +104,7 @@ class ProductListAdapter(private val onClickListener: OnClickListener) : ListAda
         adapterScore.launch {
             val sList: MutableList<DataItem> = ArrayList()
             if(!list.isNullOrEmpty()) {
-                var cat = list!![0].category!!.categoryName
+                var cat = list[0].category!!.categoryName
                 sList.add(DataItem.Header(cat))
 
                 list.forEach {

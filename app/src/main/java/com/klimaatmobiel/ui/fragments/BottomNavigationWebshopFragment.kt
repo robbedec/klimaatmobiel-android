@@ -11,10 +11,9 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 
 import com.example.projecten3android.R
-import com.klimaatmobiel.ui.ViewModelFactories.WebshopViewModelFactory
+import com.klimaatmobiel.ui.viewModelFactories.WebshopViewModelFactory
 import com.klimaatmobiel.ui.viewModels.WebshopViewModel
 import com.example.projecten3android.databinding.FragmentBottomNavigationWebshopBinding
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.klimaatmobiel.data.database.getDatabase
 import com.klimaatmobiel.data.network.KlimaatmobielApi
 import com.klimaatmobiel.domain.KlimaatmobielRepository
@@ -50,10 +49,10 @@ class BottomNavigationWebshopFragment : Fragment() {
         binding.viewModel = viewModel
 
         // Trigger to display the webshopFragment in the placeholder from the bottomNavigation
-        binding.bottomNavigationWebshop.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener {
+        binding.bottomNavigationWebshop.setOnNavigationItemSelectedListener {
             (activity as MainActivity).triggerWebshopBottomNavigation(it)
             true
-        })
+        }
 
         // Don't trigger the webShopFragment if the bottomNavigation has a saved state
         // Use the last selected item instead

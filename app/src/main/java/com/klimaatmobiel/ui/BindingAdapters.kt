@@ -2,14 +2,12 @@ package com.klimaatmobiel.ui
 
 import android.graphics.Color
 import android.util.TypedValue
-import android.opengl.Visibility
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.net.toUri
-import androidx.core.view.marginLeft
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -20,7 +18,6 @@ import com.klimaatmobiel.domain.Product
 import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
 import com.klimaatmobiel.ui.adapters.OrderPreviewListAdapter
 import com.klimaatmobiel.ui.adapters.ProductListAdapter
-import timber.log.Timber
 
 
 @BindingAdapter("listDataProducts")
@@ -107,8 +104,11 @@ fun orderTotalScoreBinding(parent: LinearLayout, score: Double) {
 
         lp.setMargins(8, 0, 8, 0)
 
-        iv.setBackgroundResource(R.drawable.score_bloem)
-
+        when(i) {
+            1 -> iv.setBackgroundResource(R.drawable.score_bloem)
+            in 2..3 -> iv.setBackgroundResource(R.drawable.score_bloem_oranje)
+            else -> iv.setBackgroundResource(R.drawable.score_bloem_groen)
+        }
         parent.addView(iv, lp)
     }
 

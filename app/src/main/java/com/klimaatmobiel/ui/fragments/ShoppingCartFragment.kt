@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.example.projecten3android.R
 import com.example.projecten3android.databinding.FragmentShoppingCartBinding
+import com.google.android.material.snackbar.Snackbar
 import com.klimaatmobiel.ui.adapters.OrderPreviewListAdapter
 import com.klimaatmobiel.ui.viewModels.WebshopViewModel
 
@@ -47,6 +49,14 @@ class ShoppingCartFragment : Fragment() {
                 binding.orderPreviewList.adapter?.notifyItemChanged(viewModel.posToRefreshInOrderPreviewListItem)
             }
         })
+
+        binding.completeOrderButton.setOnClickListener {
+            Snackbar.make(
+                activity!!.findViewById(android.R.id.content),
+                getString(R.string.order_saved),
+                Snackbar.LENGTH_LONG
+            ).show()
+        }
     }
 
     override fun onPause() {

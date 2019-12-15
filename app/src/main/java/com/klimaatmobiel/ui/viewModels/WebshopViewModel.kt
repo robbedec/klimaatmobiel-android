@@ -31,10 +31,6 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
     private val _navigateToWebshop = MutableLiveData<List<Long>>()
     val navigateToWebshop: LiveData<List<Long>> get() = _navigateToWebshop
 
-    val testScore = 7.0
-
-
-
     init {
         _group.value = group // de groep met het project end de order is hier beschikbaar
         _filteredList.value = group.project.products

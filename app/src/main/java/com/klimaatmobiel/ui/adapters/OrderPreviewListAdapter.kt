@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.projecten3android.databinding.OrderPreviewListItemBinding
 import com.klimaatmobiel.domain.OrderItem
-import com.klimaatmobiel.domain.Product
 import kotlinx.android.synthetic.main.order_preview_list_item.view.*
 
 class OrderPreviewListAdapter(val onClickListenerAdd: OnClickListener, val onClickListenerMinus: OnClickListener, val onClickListenerRemove: OnClickListener) : ListAdapter<OrderItem, OrderPreviewListAdapter.OrderItemViewHolder>(DiffCallback) {

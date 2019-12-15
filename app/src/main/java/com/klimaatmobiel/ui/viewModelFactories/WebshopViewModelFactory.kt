@@ -1,4 +1,4 @@
-package com.klimaatmobiel.ui.ViewModelFactories
+package com.klimaatmobiel.ui.viewModelFactories
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

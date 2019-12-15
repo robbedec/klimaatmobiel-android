@@ -72,7 +72,7 @@ class WebshopFragment : Fragment() {
             }
         })
 
-        var productList = viewModel.group.value!!.project.products
+        val productList = viewModel.group.value!!.project.products
         val cats = productList.map { prod -> prod.category!!.categoryName }.toSortedSet()
         val catList = listOf("GEEN FILTER") + cats.toList()
 
@@ -113,6 +113,7 @@ class WebshopFragment : Fragment() {
                     ).show()
                     viewModel.onErrorShown()
                 }
+                else -> {}
             }
         })
 

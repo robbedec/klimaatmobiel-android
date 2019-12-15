@@ -16,7 +16,7 @@ import com.klimaatmobiel.data.database.getDatabase
 import com.klimaatmobiel.data.network.KlimaatmobielApi
 import com.klimaatmobiel.domain.KlimaatmobielRepository
 import com.klimaatmobiel.domain.enums.KlimaatMobielApiStatus
-import com.klimaatmobiel.ui.ViewModelFactories.MainMenuViewModelFactory
+import com.klimaatmobiel.ui.viewModelFactories.MainMenuViewModelFactory
 import com.klimaatmobiel.ui.viewModels.MainMenuViewModel
 
 /**
@@ -60,6 +60,7 @@ class MainMenuFragment : Fragment() {
                         Snackbar.LENGTH_LONG
                     ).show()
                 }
+                else -> {}
             }
         })
     }

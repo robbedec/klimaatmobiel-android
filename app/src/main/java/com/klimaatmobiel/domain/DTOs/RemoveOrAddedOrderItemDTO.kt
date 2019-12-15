@@ -8,5 +8,5 @@ import kotlinx.android.parcel.Parcelize
 
 
 @Parcelize
-class RemoveOrAddedOrderItemDTO(val totalOrderPrice : Double, val removedOrAddedOrderItem : OrderItem): Parcelable {
+class RemoveOrAddedOrderItemDTO(val totalOrderPrice : Double, val avgScore: Double, val removedOrAddedOrderItem : OrderItem): Parcelable {
 }

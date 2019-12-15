@@ -31,10 +31,6 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
     private val _navigateToWebshop = MutableLiveData<List<Long>>()
     val navigateToWebshop: LiveData<List<Long>> get() = _navigateToWebshop
 
-    val testScore = 7.0
-
-
-
     init {
         _group.value = group // de groep met het project end de order is hier beschikbaar
         _filteredList.value = group.project.products
@@ -74,6 +70,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
                 }
 
                 _group.value!!.order.totalOrderPrice = orderItemRes.totalOrderPrice
+                _group.value!!.order.avgScore = orderItemRes.avgScore
                 _group.value = _group.value // trigger live data change, moet wss niet?
 
                 _status.value = KlimaatMobielApiStatus.DONE
@@ -91,10 +88,10 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
      * @param c [CharSequence] to filter the products with.
      */
     fun filterListString(c: CharSequence) {
-        if(c.isNotEmpty() && c.isNotBlank()) {
-            filterString = c.toString().toLowerCase(Locale.getDefault())
+        filterString = if(c.isNotEmpty() && c.isNotBlank()) {
+            c.toString().toLowerCase(Locale.getDefault())
         } else {
-            filterString = ""
+            ""
         }
         filterList()
     }
@@ -126,7 +123,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
     }
 
     /**
-     * Handle updates that are triggered in the [ShoppingCartFragment].
+     * Handle updates that are triggered in the shoppingCartFragment.
      * Completely removes the item if the amount equals 0.
      *
      * @param oi The [OrderItem] that changes.
@@ -161,6 +158,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
                 _group.value!!.findOrderItemById(orderItemRes.removedOrAddedOrderItem.orderItemId)!!
                     .amount = orderItemRes.removedOrAddedOrderItem.amount
                 _group.value!!.order.totalOrderPrice = orderItemRes.totalOrderPrice
+                _group.value!!.order.avgScore = orderItemRes.avgScore
 
                 posToRefreshInOrderPreviewListItem = _group.value!!.order.orderItems
                     .indexOf(_group.value!!.findOrderItemById(orderItemRes.removedOrAddedOrderItem.orderItemId))
@@ -197,6 +195,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
 
                 _group.value!!.order.orderItems.remove( _group.value!!.findOrderItemById(orderItemRes.removedOrAddedOrderItem.orderItemId)!!)
                 _group.value!!.order.totalOrderPrice = orderItemRes.totalOrderPrice
+                _group.value!!.order.avgScore = orderItemRes.avgScore
 
                 posToRefreshInOrderPreviewListItem = -1
 
@@ -234,6 +233,7 @@ class WebshopViewModel(group: Group, private val repository: KlimaatmobielReposi
         _status.value = null
     }
 
+    @ExperimentalCoroutinesApi
     override fun onCleared() {
         super.onCleared()
         viewModelScope.cancel()

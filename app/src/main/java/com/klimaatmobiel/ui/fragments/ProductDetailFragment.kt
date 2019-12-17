@@ -54,7 +54,7 @@ class ProductDetailFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        viewModel.product.observe(viewLifecycleOwner, Observer {
+        viewModel.product.observe(this, Observer {
             binding.product = it
         })
     }

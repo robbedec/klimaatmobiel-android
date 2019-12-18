@@ -33,7 +33,7 @@ class MainMenuViewModelTest {
     }
 
     @Test
-    fun overviewViewModel_workingAPI_responseGetsUpdated() {
+    fun mainMenuViewModel_workingAPI_responseGetsUpdated() {
         // Arrange
         coEvery { repo.getFullGroup("244222") } returns mockk()
 
@@ -47,7 +47,7 @@ class MainMenuViewModelTest {
     }
 
     @Test
-    fun overviewViewModel_ApiError_responseIndicatesFailure() {
+    fun mainMenuViewModel_ApiError_responseIndicatesFailure() {
         // Arrange
         coEvery { repo.getFullGroup("2332324") } throws Exception()
 
